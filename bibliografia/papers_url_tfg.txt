@@ -1,0 +1,3 @@
+[1] Forensic odontology in DVI: curent practice and recent advances. DOI: https://doi.org/10.1080/20961790.2019.1678710
+[2] Clinical Application of Intraoral Scanners in Dentistry: A Narrative Review. DOI: https://doi.org/10.3390/oral4040049
+[3] 3DTeethSeg'22: 3D Teeth Scan Segmentation and Labeling Challenge. Available online at: https://inria.hal.science/hal-04397404v1
