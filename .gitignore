@@ -216,3 +216,37 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ---------------------------------------------------------------------------
+# TFG — reglas propias del proyecto
+# ---------------------------------------------------------------------------
+
+# Datos. Teeth3DS se distribuye bajo CC BY-NC-ND 4.0: no se redistribuye.
+data/
+*.obj
+*.ply
+*.stl
+
+# Textos completos de artículos y material docente de terceros.
+# No son obra propia y no se redistribuyen desde este repositorio.
+papers_md/
+guias_tfg/
+
+# Pesos y salidas de entrenamiento
+checkpoints/
+runs/
+wandb/
+*.pth
+*.ckpt
+
+# Artefactos de compilación de LaTeX
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.out
+*.synctex.gz
+*.toc
