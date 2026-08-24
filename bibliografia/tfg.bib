@@ -16,6 +16,22 @@
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Computer Vision and Pattern Recognition}
 }
 
+@article{cuiTSegNetEfficientAccurate2021,
+  title = {{{TSegNet}}: {{An}} Efficient and Accurate Tooth Segmentation Network on {{3D}} Dental Model},
+  shorttitle = {{{TSegNet}}},
+  author = {Cui, Zhiming and Li, Changjian and Chen, Nenglun and Wei, Guodong and Chen, Runnan and Zhou, Yuanfeng and Shen, Dinggang and Wang, Wenping},
+  year = 2021,
+  month = apr,
+  journal = {Medical Image Analysis},
+  volume = {69},
+  pages = {101949},
+  issn = {1361-8415},
+  doi = {10.1016/j.media.2020.101949},
+  urldate = {2026-08-24},
+  abstract = {Automatic and accurate segmentation of dental models is a fundamental task in computer-aided dentistry. Previous methods can achieve satisfactory segmentation results on normal dental models; however, they fail to robustly handle challenging clinical cases such as dental models with missing, crowding, or misaligned teeth before orthodontic treatments. In this paper, we propose a novel end-to-end learning-based method, called TSegNet, for robust and efficient tooth segmentation on 3D scanned point cloud data of dental models. Our algorithm detects all the teeth using a distance-aware tooth centroid voting scheme in the first stage, which ensures the accurate localization of tooth objects even with irregular positions on abnormal dental models. Then, a confidence-aware cascade segmentation module in the second stage is designed to segment each individual tooth and resolve ambiguities caused by aforementioned challenging cases. We evaluated our method on a large-scale real-world dataset consisting of dental models scanned before or after orthodontic treatments. Extensive evaluations, ablation studies and comparisons demonstrate that our method can generate accurate tooth labels robustly in various challenging cases and significantly outperforms state-of-the-art approaches by 6.5\% of Dice Coefficient, 3.0\% of F1 score in term of accuracy, while achieving 20 times speedup of computational time.},
+  keywords = {3D point cloud,Confidence-aware cascade segmentation,Dental model segmentation,Tooth centroid prediction}
+}
+
 @article{forrestForensicOdontologyDVI2019,
   title = {Forensic Odontology in {{DVI}}: Current Practice and Recent Advances},
   shorttitle = {Forensic Odontology in {{DVI}}},
@@ -50,4 +66,53 @@
   copyright = {http://creativecommons.org/licenses/by/3.0/},
   langid = {english},
   keywords = {digital impression,efficiency,intraoral scanners,oral disease diagnosis,satisfaction}
+}
+
+@article{lianDeepMultiScaleMesh2020,
+  title = {Deep {{Multi-Scale Mesh Feature Learning}} for {{Automated Labeling}} of {{Raw Dental Surfaces From 3D Intraoral Scanners}}},
+  author = {Lian, Chunfeng and Wang, Li and Wu, Tai-Hsien and Wang, Fan and Yap, Pew-Thian and Ko, Ching-Chang and Shen, Dinggang},
+  year = 2020,
+  month = jul,
+  journal = {IEEE Transactions on Medical Imaging},
+  volume = {39},
+  number = {7},
+  pages = {2440--2450},
+  issn = {1558-254X},
+  doi = {10.1109/TMI.2020.2971730},
+  urldate = {2026-08-24},
+  abstract = {Precisely labeling teeth on digitalized 3D dental surface models is the precondition for tooth position rearrangements in orthodontic treatment planning. However, it is a challenging task primarily due to the abnormal and varying appearance of patients' teeth. The emerging utilization of intraoral scanners (IOSs) in clinics further increases the difficulty in automated tooth labeling, as the raw surfaces acquired by IOS are typically low-quality at gingival and deep intraoral regions. In recent years, some pioneering end-to-end methods (e.g., PointNet) have been proposed in the communities of computer vision and graphics to consume directly raw surface for 3D shape segmentation. Although these methods are potentially applicable to our task, most of them fail to capture fine-grained local geometric context that is critical to the identification of small teeth with varying shapes and appearances. In this paper, we propose an end-to-end deep-learning method, called MeshSegNet, for automated tooth labeling on raw dental surfaces. Using multiple raw surface attributes as inputs, MeshSegNet integrates a series of graph-constrained learning modules along its forward path to hierarchically extract multi-scale local contextual features. Then, a dense fusion strategy is applied to combine local-to-global geometric features for the learning of higher-level features for mesh cell annotation. The predictions produced by our MeshSegNet are further post-processed by a graph-cut refinement step for final segmentation. We evaluated MeshSegNet using a real-patient dataset consisting of raw maxillary surfaces acquired by 3D IOS. Experimental results, performed 5-fold cross-validation, demonstrate that MeshSegNet significantly outperforms state-of-the-art deep learning methods for 3D shape segmentation.},
+  keywords = {3D intraoral scanners,3D shape segmentation,automated tooth labeling,Dentistry,Feature extraction,geometric deep learning,Labeling,orthodontic treatment planning,Shape,Surface morphology,Teeth,Three-dimensional displays}
+}
+
+@article{maSRFNetSpatialRelationship2020,
+  title = {{{SRF-Net}}: {{Spatial Relationship Feature Network}} for {{Tooth Point Cloud Classification}}},
+  shorttitle = {{{SRF-Net}}},
+  author = {Ma, Qian and Wei, Guangshun and Zhou, Yuanfeng and Pan, Xiao and Xin, Shiqing and Wang, Wenping},
+  year = 2020,
+  journal = {Computer Graphics Forum},
+  volume = {39},
+  number = {7},
+  pages = {267--277},
+  issn = {1467-8659},
+  doi = {10.1111/cgf.14143},
+  urldate = {2026-08-24},
+  abstract = {3D scanned point cloud data of teeth is popular used in digital orthodontics. The classification and semantic labelling for point cloud of each tooth is a key and challenging task for planning dental treatment. Utilizing the priori ordered position information of tooth arrangement, we propose an effective network for tooth model classification in this paper. The relative position and the adjacency similarity feature vectors are calculated for tooth 3D model, and combine the geometric feature into the fully connected layers of the classification training task. For the classification of dental anomalies, we present a dental anomalies processing method to improve the classification accuracy. We also use FocalLoss as the loss function to solve the sample imbalance of wisdom teeth. The extensive evaluations, ablation studies and comparisons demonstrate that the proposed network can classify tooth models accurately and automatically and outperforms state-of-the-art point cloud classification methods.},
+  copyright = {\copyright{} 2020 The Author(s) Computer Graphics Forum \copyright{} 2020 The Eurographics Association and John Wiley \& Sons Ltd. Published by John Wiley \& Sons Ltd.},
+  langid = {english},
+  keywords = {CCS Concepts,Computing methodologies  Shape analysis}
+}
+
+@inproceedings{qiuDArchDentalArch2022,
+  title = {{{DArch}}: {{Dental Arch Prior-assisted 3D Tooth Instance Segmentation}} with {{Weak Annotations}}},
+  shorttitle = {{{DArch}}},
+  booktitle = {2022 {{IEEE}}/{{CVF Conference}} on {{Computer Vision}} and {{Pattern Recognition}} ({{CVPR}})},
+  author = {Qiu, Liangdong and Ye, Chongjie and Chen, Pei and Liu, Yunbi and Han, Xiaoguang and Cui, Shuguang},
+  year = 2022,
+  month = jun,
+  pages = {20720--20729},
+  issn = {2575-7075},
+  doi = {10.1109/CVPR52688.2022.02009},
+  urldate = {2026-08-24},
+  abstract = {Automatic tooth instance segmentation on 3D dental models is a fundamental task for computer-aided orthodontic treatments. Existing learning-based methods rely heavily on expensive point-wise annotations. To alleviate this problem, we are the first to explore a low-cost annotation way for 3D tooth instance segmentation, i.e., labeling all tooth centroids and only a few teeth for each dental model. Regarding the challenge when only weak annotation is provided, we present a dental arch prior-assisted 3D tooth segmentation method, namely DArch. Our DArch consists of two stages, including tooth centroid detection and tooth instance segmentation. Accurately detecting the tooth centroids can help locate the individual tooth, thus benefiting the segmentation. Thus, our DArch proposes to leverage the dental arch prior to assist the detection. Specifically, we firstly propose a coarse-to-fine method to estimate the dental arch, in which the dental arch is initially generated by Bezier curve regression, and then a graph-based convolutional network (GCN) is trained to refine it. With the estimated dental arch, we then propose a novel Arch-aware Point Sampling (APS) method to assist the tooth centroid proposal generation. Meantime, a segmentor is independently trained using a patch-based training strategy, aiming to segment a tooth instance from a 3D patch centered at the tooth centroid. Experimental results on 4, 773 dental models have shown our DArch can accurately segment each tooth of a dental model, and its performance is superior to the state-of-the-art methods.},
+  keywords = {Annotations,biological and cell microscopy,Computational modeling,Dentistry,Medical,Solid modeling,Teeth,Three-dimensional displays,Training}
 }
