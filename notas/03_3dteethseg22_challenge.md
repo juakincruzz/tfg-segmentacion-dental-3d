@@ -329,7 +329,7 @@ El listón está en dos sitios y hay que superar los dos: IGIP (parábola + orde
 
 - **Con la ficha 01 (Forrest 2019).** Forrest argumenta que el futuro de la odontología forense está en la comparación de superficies 3D y que el proceso es candidato a automatizarse. Este paper aporta justo la pieza que allí falta: datos 3D públicos, anotados y una métrica. *La unión entre ambos es aportación mía: este paper no menciona lo forense en ninguna parte.*
 - **Con la ficha 02 (Lee 2024).** Los tres escáneres usados aquí (Primescan, Trios3, iTero) aparecen en las tablas de modelos de aquella revisión. Sirve para justificar en la memoria que Teeth3DS se adquirió con equipos representativos de la práctica clínica real.
-- **Limitación heredada de la ficha 01.** Forrest deja abiertas dos preguntas —cuánto degrada la coincidencia el tratamiento restaurador u ortodóncico, y cuál es el fragmento mandibular mínimo que aún permite identificar—. Ninguna de las dos se puede responder con Teeth3DS: aquí siempre hay arcada completa escaneada in vivo, nunca fragmentos.
+- **Limitación heredada de la ficha 01.** Forrest deja abiertas dos preguntas —cuánto degrada la coincidencia el tratamiento restaurador u ortodóncico, y cuál es el fragmento mandibular mínimo que aún permite identificar—. Ninguna de las dos se puede responder con Teeth3DS: aquí siempre se escanea la arcada entera de un paciente vivo, nunca fragmentos.
 
 ---
 

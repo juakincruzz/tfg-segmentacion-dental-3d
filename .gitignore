@@ -251,6 +251,6 @@ wandb/
 *.synctex.gz
 *.toc
 
-# AGENTS.MD Y CLAUDE.,D
+# Ficheros de configuración de asistentes de IA
 AGENTS.md
 CLAUDE.md
