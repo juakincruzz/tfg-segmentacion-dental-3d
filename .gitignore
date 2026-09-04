@@ -250,3 +250,7 @@ wandb/
 *.out
 *.synctex.gz
 *.toc
+
+# AGENTS.MD Y CLAUDE.,D
+AGENTS.md
+CLAUDE.md
