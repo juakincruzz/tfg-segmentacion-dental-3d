@@ -231,6 +231,7 @@ data/
 # No son obra propia y no se redistribuyen desde este repositorio.
 papers_md/
 guias_tfg/
+papers_pdf/
 
 # Pesos y salidas de entrenamiento
 checkpoints/
@@ -254,3 +255,4 @@ wandb/
 # Ficheros de configuración de asistentes de IA
 AGENTS.md
 CLAUDE.md
+
