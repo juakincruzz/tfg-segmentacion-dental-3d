@@ -232,6 +232,8 @@ data/
 papers_md/
 guias_tfg/
 papers_pdf/
+TFGs_TFMs_ejemplo/
+
 
 # Pesos y salidas de entrenamiento
 checkpoints/
