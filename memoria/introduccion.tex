@@ -106,19 +106,21 @@ las posiciones vacías. El resultado es la malla original donde cada diente est�
 \subsection{Solución propuesta}
 \label{subsec:solucion-propuesta}
 
-% Qué se propone, en positivo (la guía insiste en no abrir con lo que el
-% método no hace).
-%
-% El hueco, tal como quedó tras leer TSegNet y DArch (ficha 05, punto 6):
-% etiquetar con coherencia global sin asumir que la arcada está completa.
-% - Los métodos que usan el contexto de la arcada asumen dentición
-%   completa o reordenan secuencias sin huecos.
-% - Los datos lo desmienten: 13.3 dientes por escaneo de media en
-%   Teeth3DS frente a los 16 de una arcada completa (ficha 03).
-%   IMPORTANTE: sustituir por la cifra que salga del script propio de
-%   conteo en cuanto se tenga acceso a los datos.
-% - La propuesta: asignación conjunta de los números FDI (método
-%   húngaro), que no repite números y admite posiciones vacías.
+Para numerar los dientes, las técnicas actuales utilizan dos enfoques. Algunos, como TSegNet, asignan un número a cada diente individualmente basándose en su forma y ubicación, sin 
+considerar los otros dientes \cite{cuiTSegNetEfficientAccurate2021}, lo que puede llevar a que dos dientes tengan el mismo número. Otros ajustan el resultado posteriormente ordenando
+los dientes siguiendo la curva de la arcada. Un ejemplo es IGIP, que presenta la mejor tasa de identificación en el reto \cite{ben-hamadou3DTeethSeg223DTeeth2023}: esta 
+ordenación elimina la repetición y el desorden en los números, pero no detecta la falta de un diente al final de una hemiarcada, ya que es coherente.
+
+La complicación crece debido a que la falta de un diente no siempre deja un hueco visible. Cuando no se reemplaza el diente que falta, los dientes adyacentes suelen moverse o
+inclinarse hacia el área vacía, y el diente opuesto en la arcada contraria tiende a extruirse \cite{pendiente}, por lo que con el tiempo el hueco puede llegar a cerrarse.
+
+Este trabajo propone comenzar con un esquema fijo que contenga las ubicaciones anatómicas de la arcada y asignar los dientes detectados a esas ubicaciones simultáneamente, en lugar de
+hacerlo de forma individual. La asignación se plantea como un problema de emparejamiento y se aborda utilizando el algoritmo húngaro \cite{kuhnHungarianMethodAssignment1955}, que asegura
+que no haya números duplicados y permite que ciertas posiciones queden vacías si faltan dientes. De esta manera, cada número FDI mantiene su lugar, incluso si el diente relacionado no
+está presente, tal como establece la propia notación.
+
+El presente trabajo no se centra en la comparación de los perfiles \textit{antemortem} y \textit{postmortem}, sino en la fase anterior a esta, que consiste en conseguir que, 
+a partir de un escaneo, cada diente esté bien delimitado y numerado adecuadamente, lo cual es esencial para realizar cualquier comparación automatizada.
 
 \section{Motivación}
 \label{sec:motivacion}
