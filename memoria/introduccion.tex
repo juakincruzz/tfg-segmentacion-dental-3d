@@ -108,8 +108,8 @@ las posiciones vacías. El resultado es la malla original donde cada diente est�
 
 Para numerar los dientes, las técnicas actuales utilizan dos enfoques. Algunos, como TSegNet, asignan un número a cada diente individualmente basándose en su forma y ubicación, sin 
 considerar los otros dientes \cite{cuiTSegNetEfficientAccurate2021}, lo que puede llevar a que dos dientes tengan el mismo número. Otros ajustan el resultado posteriormente ordenando
-los dientes siguiendo la curva de la arcada. Un ejemplo es IGIP, que presenta la mejor tasa de identificación en el reto \cite{ben-hamadou3DTeethSeg223DTeeth2023}: esta 
-ordenación elimina la repetición y el desorden en los números, pero no detecta la falta de un diente al final de una hemiarcada, ya que es coherente.
+los dientes siguiendo la curva de la arcada. Un ejemplo es IGIP, que presenta la mejor tasa de identificación en el reto 3DTeethSeg \cite{ben-hamadou3DTeethSeg223DTeeth2023}: esta 
+ordenación elimina la repetición y el desorden en los números, pero no detecta la falta de un diente, ya que la secuencia resultante es coherente aunque esté desplazada.
 
 La complicación crece debido a que la falta de un diente no siempre deja un hueco visible. Cuando no se reemplaza el diente que falta, los dientes adyacentes suelen moverse o
 inclinarse hacia el área vacía, y el diente opuesto en la arcada contraria tiende a extruirse \cite{pendiente}, por lo que con el tiempo el hueco puede llegar a cerrarse.
