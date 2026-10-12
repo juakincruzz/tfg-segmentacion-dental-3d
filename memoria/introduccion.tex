@@ -93,15 +93,15 @@ favorecer a una incorrecta. Esto resalta la necesidad de que un sistema automát
 \subsection{Segmentación y etiquetado de los dientes}
 \label{subsec:segmentacion-etiquetado}
 
-% La tarea concreta: separar cada diente de la encía (segmentación) y
-% asignarle su número FDI (etiquetado). Distinguir bien las dos cosas,
-% porque buena parte de la literatura solo hace la primera (ficha 04).
-%
-% Introducir aquí la notación ISO-3950/FDI solo lo justo; el desarrollo
-% va en Fundamentos teóricos.
-%
-% Figura 1.2: diagrama general del sistema (entrada -> segmentación ->
-% etiquetado -> salida). Equivalente a la Figura 1.2 de Barco.
+El problema que aborda este trabajo se compone de dos tareas. La \textbf{segmentación} implica determinar, para cada vértice de la malla, si forma parte de la encía o de un diente y, si es así,
+a qué diente específico pertenece, de tal forma que cada diente esté aislado de los demás. El \textbf{etiquetado} se refiere a asignar a cada diente segmentado su correspondiente número
+según la notación FDI. Es importante diferenciarlas debido a sus distintas complejidades: un método puede lograr separar todos los dientes con precisión y, aun así, numerarlos
+incorrectamente, como sucede cuando un diente está ausente y provoca un desplazamiento en la numeración. De hecho, algunos de los métodos propuestos se enfocan exclusivamente en la
+segmentación \cite{qiuDArchDentalArch2022}, y la evaluación de 3DTeethSeg analiza ambas tareas de manera independiente \cite{ben-hamadou3DTeethSeg223DTeeth2023}.
+
+La Figura~\ref{fig:diagrama-sistema} sintetiza el sistema propuesto. A partir del escaneo intraoral, representado como una malla tridimensional, una etapa inicial distingue cada diente de
+la encía así como de los dientes adyacentes. En una etapa posterior, se asigna a cada diente su código FDI, considerando la totalidad de la arcada, lo que facilita la identificación de
+las posiciones vacías. El resultado es la malla original donde cada diente está delimitado y numerado.
 
 \subsection{Solución propuesta}
 \label{subsec:solucion-propuesta}
