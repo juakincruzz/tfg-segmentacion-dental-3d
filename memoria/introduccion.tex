@@ -44,21 +44,23 @@ Además, se puede hacer el escaneo sin necesidad de retirar los brackets, permit
 \cite{leeClinicalApplicationIntraoral2024}. Sin embargo, los brackets quedan adheridos a la superficie del diente como piezas que no forman parte de él, ocultan su verdadera forma y 
 complican su segmentación y etiquetado \cite{ben-hamadou3DTeethSeg223DTeeth2023}.
 
-
-
 \subsection{Identificación forense y odontología clínica}
 \label{subsec:forense-clinica}
 
-% Las dos caras del problema, como en el TFG de Barco.
-%
-% Forense (ficha 01): qué es la DVI, comparación antemortem/postmortem,
-% la guía de INTERPOL, y el argumento de que la comparación 3D es el
-% futuro del campo y candidata a automatizarse.
-% Clínica (ficha 02): ortodoncia, planificación, el escáner como fuente
-% de datos antemortem que hoy ya se está generando de forma masiva.
-%
-% Conviene dejar explícito el puente: lo que hoy se guarda por motivos
-% clínicos es material antemortem para una identificación futura.
+La identificación de víctimas de catástrofes (DVI, en inglés) es el proceso por el cual se confirma quiénes son los individuos que han perdido la vida en 
+un evento con gran cantidad de víctimas, especialmente cuando su estado impide el reconocimiento a simple vista. En estas situaciones, los dientes se convierten en una herramienta 
+fundamental: resisten condiciones extremas y su forma, disposición y los tratamientos que han recibido son característicos de cada persona \cite{forrestForensicOdontologyDVI2019}.
+
+El método se basa en la comparación de dos perfiles dentales. El perfil \textit{antemortem} se elabora utilizando la información de personas desaparecidas, que conservan sus dentistas: 
+fichas escritas, odontogramas, radiografías y, cada vez más, tomografías y escaneos en 3D. Las imágenes se consideran más fiables que los registros escritos, ya que 
+provienen directamente del paciente \cite{forrestForensicOdontologyDVI2019}. El perfil \textit{postmortem} se genera mediante la evaluación de cada víctima de acuerdo con las directrices 
+de INTERPOL, que requieren que se registre la condición de cada diente, ya sea que esté presente o ausente, además de radiografías y fotografías. Cuando hay un gran número de víctimas,
+la comparación se apoya en programas como DVISys, que ordena a los posibles candidatos para su evaluación posterior por un especialista \cite{forrestForensicOdontologyDVI2019}.
+
+Para que esta comparación sea efectiva, es fundamental que ambos perfiles se refieran a cada diente de forma uniforme. Hay múltiples sistemas de numeración dental y no todos los países
+emplean el mismo, por lo que INTERPOL sugiere el uso de la notación de la Federación Dental Internacional (FDI), la cual otorga a cada diente un número compuesto por dos dígitos
+\cite{forrestForensicOdontologyDVI2019}. Un diente que esté mal identificado en cualquiera de los perfiles puede crear una inconsistencia que podría excluir a la persona correcta o
+favorecer a una incorrecta. Esto resalta la necesidad de que un sistema automático no solo separe los dientes, sino que también les asigne el número adecuado.
 
 \subsection{Segmentación y etiquetado de los dientes}
 \label{subsec:segmentacion-etiquetado}
