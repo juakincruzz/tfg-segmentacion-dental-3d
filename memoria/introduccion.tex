@@ -49,10 +49,28 @@ y sus estructuras adyacentes \cite{barcoDeteccionSegmentacion2025}. Al ser una p
 ampliación no se distribuye de manera uniforme a lo largo de toda la imagen \cite{barcoDeteccionSegmentacion2025}. Por otro lado, el escaneo intraoral proporciona información 
 complementaria: aunque no revela estructuras internas como las raíces o el hueso, representa la superficie real de cada diente en tres dimensiones, a escala y con color, sin superposiciones
 y evitando la exposición del paciente a radiación \cite{forrestForensicOdontologyDVI2019}. Investigaciones anteriores del mismo grupo se centraron en la detección, segmentación e 
-identificación de dientes en imágenes OPT mediante aprendizaje profundo \cite{barcoDeteccionSegmentacion2025}. Se observó que los errores se concentraban en molares, dado que son los 
+identificación de dientes en imágenes OPT mediante aprendizaje profundo \cite{barcoDeteccionSegmentacion2025}. Se observó que los errores se concentraban en los molares, dado que son los 
 dientes que más frecuentemente están ausentes, lo que provoca que el modelo tenga menos referencias anatómicas para diferenciar estos dientes \cite{barcoDeteccionSegmentacion2025}. 
 El presente trabajo lleva el desafío al ámbito tridimensional y se enfoca precisamente en esta complejidad: asignar a cada diente su número FDI de manera coherente con el resto de la 
 arcada, aun en casos de dientes ausentes.
+
+Aparte de los brackets, el escaneo intraoral enfrenta otras dificultades propias. En la malla, no hay un límite geométrico bien definido que separe el diente de la encía, ya que
+forman una superficie continua, por lo quedelimitar cada diente sea complicado \cite{cuiTSegNetEfficientAccurate2021}. Cuando los dientes están apiñados, las divisiones entre
+dientes adyacentes no son evidentes, y así, dos dientes cercanos pueden ser confundidos como uno solo \cite{ben-hamadou3DTeethSeg223DTeeth2023}.
+
+% ACTUALIZAR con las 6 partes: 4,7 %, 35 % e histograma (src/conteo_dientes.py)
+La falta de dientes presenta un problema diferente, relacionado con la numeración. En el sistema de notación FDI, cada número está vinculado a una ubicación específica en la arcada, por
+lo que si un diente está ausente, su número no se cambia: si el segundo premolar (35) no está, el diente adyacente al primer premolar continúa siendo el primer molar (36). Si se 
+utilizara un método que numerara los dientes según su secuencia de aparición, el primer molar recibiría el número 35, y a partir de ahí se desplazaría la numeración de todos los dientes
+siguientes. Esta situación no es inusual. En los 300 escaneos revisados de Teeth3DS, únicamente un 4{,}7\,\% muestra la arcada completa de 16 dientes, y el 35\,\% presenta al menos una 
+ausencia aun sin contar los terceros molares (Figura~\ref{fig:histograma-dientes}).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{imagenes/histograma_dientes.png}
+    \caption{Número de dientes presentes por escaneo en los 300 escaneos de la primera de las seis partes de Teeth3DS. Solo el 4{,}7\,\% contiene la arcada completa de 16 dientes.}
+    \label{fig:histograma-dientes}
+\end{figure}
 
 \subsection{Identificación forense y odontología clínica}
 \label{subsec:forense-clinica}
