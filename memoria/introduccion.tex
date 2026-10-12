@@ -153,22 +153,18 @@ dentición tridimensional, en un contexto donde el interés científico por esto
 \section{Objetivos}
 \label{sec:objetivos}
 
-% Un objetivo principal y varios parciales. En las Conclusiones hay que
-% volver sobre ellos y decir en qué grado se han alcanzado, así que
-% conviene que sean comprobables.
-%
-% Principal (borrador a pulir con los tutores):
-%   Desarrollar un sistema de segmentación y etiquetado de dientes en
-%   escaneos intraorales 3D que mantenga la coherencia de la numeración
-%   sin asumir que la arcada está completa.
-%
-% Parciales, uno por línea:
-%   - Estudiar el estado del arte en segmentación y etiquetado dental 3D.
-%   - Caracterizar Teeth3DS, midiendo cuántos dientes faltan y con qué
-%     frecuencia.
-%   - Implementar la línea base y la propuesta de asignación conjunta.
-%   - Evaluar con métricas que midan la coherencia de la numeración, no
-%     solo el acierto por diente (ficha 05, punto 6.3).
+El propósito general del presente Trabajo Fin de Grado se divide en varios objetivos específicos que corresponden a las diferentes fases de desarrollo y evaluación del sistema.
+
+\textbf{Objetivo general.} Desarrollar un sistema que posibilite la segmentación y el etiquetado de dientes de manera automática en escaneos intraorales 3D y que garantice la coherencia 
+de la numeración dental, es decir, que evite la repetición de números y mantenga vacías las posiciones correspondientes a dientes ausentes.
+
+\begin{enumerate}[label=\textbf{OE\arabic*.}]
+    \item Estudiar el estado del arte en la segmentación y etiquetado automático de dientes en escaneos intraorales 3D, además de los procedimientos empleados para determinar correspondencias entre piezas dentales.
+    \item Examinar y describir el conjunto de datos Teeth3DS, analizando la distribución de los dientes, la frecuencia de ausencias y las posiciones en las que se producen, con el fin de obtener información relevante para el entrenamiento y la evaluación de los métodos.
+    \item Implementar y evaluar un método existente de segmentación y etiquetado como línea base que sirva como referencia de comparación para el método propuesto.
+    \item Diseñar e implementar una técnica de asignación de etiquetas dentales basada en el método húngaro y en un mapa fijo de posiciones, con el propósito de generar una numeración dental coherente a nivel global y mantener vacías las posiciones correspondientes a dientes ausentes.
+    \item Evaluar el sistema mediante las métricas oficiales del reto 3DTeethSeg y métricas complementarias enfocadas en la coherencia del etiquetado, incluyendo errores de numeración y asignación, y analizando por separado los casos con dientes ausentes y los que no.
+\end{enumerate}
 
 \section{Planificación del proyecto}
 \label{sec:planificacion}
