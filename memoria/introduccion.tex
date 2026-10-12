@@ -1,0 +1,155 @@
+% =====================================================================
+% Capítulo 1. Introducción
+%
+% Esqueleto de trabajo. Cada comentario indica qué va en cada sitio y de
+% qué ficha de notas/ sale el material. Borrar los comentarios según se
+% vaya redactando.
+%
+% Extensión orientativa: 10-12 páginas contando figuras.
+% La guía marca Introducción como sección prioritaria junto al Resumen y
+% las Conclusiones: es lo que el tribunal lee seguro.
+% =====================================================================
+
+\chapter{Introducción}
+\label{cap:introduccion}
+
+Los escáneres intraorales 3D son dispositivos que permiten capturar la geometría y el color de la arcada dental de un paciente, generando una malla tridimensional detallada. 
+Estos escáneres se utilizan para planificar tratamientos de ortodoncia, prótesis y otras intervenciones en odontología. Su uso se ha vuelto común, y cada vez más clínicas 
+dentales realizan escaneos intraorales 3D de sus pacientes \cite{pendiente}.
+
+Además de su aplicación en el ámbito clínico, estos escaneos tienen un gran potencial en la identificación forense, ya que permiten comparar registros \textit{antemortem} 
+y \textit{postmortem}, lo cual puede ser fundamental para establecer la identidad de personas fallecidas. Cuando existen buenos registros previos, la odontología forense 
+resulta clave en la identificación de víctimas, ya que llega a identificar en torno al 60\,\% de ellas, y contribuye en otro 30\,\% de los casos \cite{forrestForensicOdontologyDVI2019}.
+La literatura forense apunta a que se podrán comparar modelos 3D de manera automatizada \cite{forrestForensicOdontologyDVI2019}. Esto ayudaría en grandes catástrofes o 
+accidentes donde se requiera identificar a muchas personas. Además, como cada vez más clínicas escanean a sus pacientes, crece el número de registros \textit{antemortem} disponibles, 
+que podrían utilizarse en el futuro para la identificación forense.
+
+Por eso, este trabajo se enfoca en segmentar y etiquetar cada diente, considerando ausencias, apiñamiento y brackets, manteniendo la coherencia de la numeración sin asumir que la arcada
+está completa, con vistas a su uso en contextos forenses y clínicos.
+
+\section{Descripción del problema}
+\label{sec:descripcion-problema}
+
+% ¿Qué queremos hacer? De lo general a lo particular.
+%
+% 1. Qué es un escáner intraoral y qué produce (malla 3D de la arcada).
+%    Ficha 02. Incluir la comparación con el modelo de escayola.
+% 2. Por qué el dato 3D es distinto del 2D: sin superposición, sin
+%    distorsión geométrica, con color. Aquí se justifica por qué este
+%    TFG no es una repetición del de Barco (2025), que trabaja con OPTs.
+% 3. Dificultades propias del dato: frontera diente-encía sin señal
+%    geométrica clara, brackets y artefactos, apiñamiento. Fichas 03 y 05.
+%
+% Figura 1.1: ejemplos de escaneos, uno normal y dos difíciles (ausencias,
+% apiñamiento, brackets). Sale de Teeth3DS una vez se tenga acceso.
+% Pie de figura explicativo, no una línea suelta.
+
+\subsection{Identificación forense y odontología clínica}
+\label{subsec:forense-clinica}
+
+% Las dos caras del problema, como en el TFG de Barco.
+%
+% Forense (ficha 01): qué es la DVI, comparación antemortem/postmortem,
+% la guía de INTERPOL, y el argumento de que la comparación 3D es el
+% futuro del campo y candidata a automatizarse.
+% Clínica (ficha 02): ortodoncia, planificación, el escáner como fuente
+% de datos antemortem que hoy ya se está generando de forma masiva.
+%
+% Conviene dejar explícito el puente: lo que hoy se guarda por motivos
+% clínicos es material antemortem para una identificación futura.
+
+\subsection{Segmentación y etiquetado de los dientes}
+\label{subsec:segmentacion-etiquetado}
+
+% La tarea concreta: separar cada diente de la encía (segmentación) y
+% asignarle su número FDI (etiquetado). Distinguir bien las dos cosas,
+% porque buena parte de la literatura solo hace la primera (ficha 04).
+%
+% Introducir aquí la notación ISO-3950/FDI solo lo justo; el desarrollo
+% va en Fundamentos teóricos.
+%
+% Figura 1.2: diagrama general del sistema (entrada -> segmentación ->
+% etiquetado -> salida). Equivalente a la Figura 1.2 de Barco.
+
+\subsection{Solución propuesta}
+\label{subsec:solucion-propuesta}
+
+% Qué se propone, en positivo (la guía insiste en no abrir con lo que el
+% método no hace).
+%
+% El hueco, tal como quedó tras leer TSegNet y DArch (ficha 05, punto 6):
+% etiquetar con coherencia global sin asumir que la arcada está completa.
+% - Los métodos que usan el contexto de la arcada asumen dentición
+%   completa o reordenan secuencias sin huecos.
+% - Los datos lo desmienten: 13.3 dientes por escaneo de media en
+%   Teeth3DS frente a los 16 de una arcada completa (ficha 03).
+%   IMPORTANTE: sustituir por la cifra que salga del script propio de
+%   conteo en cuanto se tenga acceso a los datos.
+% - La propuesta: asignación conjunta de los números FDI (método
+%   húngaro), que no repite números y admite posiciones vacías.
+
+\section{Motivación}
+\label{sec:motivacion}
+
+% ¿Por qué es relevante? Dos bloques.
+%
+% 1. Casos concretos donde la identificación forense hace falta. Barco
+%    usa una lista de catástrofes con cifras y referencias; sirve de
+%    modelo, pero conviene buscar las fuentes propias y no copiar su
+%    selección.
+% 2. Por qué en 3D y por qué ahora: el escáner intraoral se ha
+%    generalizado en la clínica, así que el volumen de datos antemortem
+%    3D crece cada año (ficha 02).
+%
+% La guía recomienda un histograma de publicaciones del campo (Scopus o
+% similar) indicando la consulta empleada y la fecha de la búsqueda.
+% Figura 1.3.
+
+\section{Objetivos}
+\label{sec:objetivos}
+
+% Un objetivo principal y varios parciales. En las Conclusiones hay que
+% volver sobre ellos y decir en qué grado se han alcanzado, así que
+% conviene que sean comprobables.
+%
+% Principal (borrador a pulir con los tutores):
+%   Desarrollar un sistema de segmentación y etiquetado de dientes en
+%   escaneos intraorales 3D que mantenga la coherencia de la numeración
+%   sin asumir que la arcada está completa.
+%
+% Parciales, uno por línea:
+%   - Estudiar el estado del arte en segmentación y etiquetado dental 3D.
+%   - Caracterizar Teeth3DS, midiendo cuántos dientes faltan y con qué
+%     frecuencia.
+%   - Implementar la línea base y la propuesta de asignación conjunta.
+%   - Evaluar con métricas que midan la coherencia de la numeración, no
+%     solo el acierto por diente (ficha 05, punto 6.3).
+
+\section{Planificación del proyecto}
+\label{sec:planificacion}
+
+\subsection{Planificación temporal}
+\label{subsec:planificacion-temporal}
+
+% 12 ECTS x 25 h = 300 horas. Repartirlas por etapas y dibujar un
+% diagrama de Gantt sencillo (Figura 1.4). Etapas previsibles:
+% revisión bibliográfica, acceso y exploración de datos, implementación,
+% experimentación, y escritura en paralelo durante todo el proyecto.
+%
+% Dejar esta subsección viva: al final del TFG hay que añadir la
+% planificación real y justificar las desviaciones. La rúbrica puntúa
+% explícitamente identificar y justificar desviaciones.
+
+\subsection{Planificación económica}
+\label{subsec:planificacion-economica}
+
+% Horas de trabajo a precio de junior, más amortización del material:
+% portátil, GPU o servidor de la universidad, licencias. Se presupuesta
+% la parte amortizada, no el coste total del equipo.
+
+\section{Uso de herramientas de inteligencia artificial}
+\label{sec:uso-ia}
+
+% La guía de Mesejo pide indicar con claridad qué herramientas de IA
+% generativa se han usado, de qué modo y en qué partes del trabajo.
+% Redactarlo de forma honesta y concreta.
