@@ -125,19 +125,30 @@ a partir de un escaneo, cada diente esté bien delimitado y numerado adecuadamen
 \section{Motivación}
 \label{sec:motivacion}
 
-% ¿Por qué es relevante? Dos bloques.
-%
-% 1. Casos concretos donde la identificación forense hace falta. Barco
-%    usa una lista de catástrofes con cifras y referencias; sirve de
-%    modelo, pero conviene buscar las fuentes propias y no copiar su
-%    selección.
-% 2. Por qué en 3D y por qué ahora: el escáner intraoral se ha
-%    generalizado en la clínica, así que el volumen de datos antemortem
-%    3D crece cada año (ficha 02).
-%
-% La guía recomienda un histograma de publicaciones del campo (Scopus o
-% similar) indicando la consulta empleada y la fecha de la búsqueda.
-% Figura 1.3.
+Después del tsunami en el sudeste asiático en 2004, se llevaron a cabo identificaciones visuales de varias víctimas, quienes fueron enterradas o cremadas en un breve periodo 
+\cite{forrestForensicOdontologyDVI2019}. Sin embargo, el equipo de INTERPOL que analizó las acciones posteriores al desastre determinó que la identificación visual tiene una fiabilidad
+limitada y puede ocasionar errores en la identificación, así como la entrega inapropiada de los cuerpos a los familiares \cite{forrestForensicOdontologyDVI2019}. Por lo tanto, los métodos
+de identificación de personas en situaciones de desastre deben incluir técnicas científicas que sean replicables y verificables, entre las cuales destaca la comparación dental.
+
+Una de las limitaciones más importantes de este método es la disponibilidad de los datos \textit{antemortem}. Las catástrofes, como incendios, inundaciones, terremotos o tsunamis, pueden
+dañar también las clínicas dentales y ocasionar la pérdida de registros y antecedentes odontológicos \cite{forrestForensicOdontologyDVI2019}. En cambio, los archivos digitales ofrecen
+beneficios significativos, ya que pueden ser copiados, guardados en diferentes ubicaciones y enviados sin pérdida de calidad en la información \cite{forrestForensicOdontologyDVI2019}.
+Por tanto, un escaneo dental en tres dimensiones guardado en formato digital puede seguir estando accesible para futuras identificaciones, incluso si la infraestructura física donde se 
+obtuvo ha sido destruida.
+
+La implementación cada vez más frecuente de escáneres intraorales en la práctica dental está aumentando poco a poco el acceso a modelos dentales tridimensionales \textit{antemortem}
+\cite{leeClinicalApplicationIntraoral2024}. A ello se suma que hasta 2022 no existía ningún conjunto de datos público de escaneos dentales en 3D que contuviera anotaciones 
+individualizadas para cada diente. El reto 3DTeethSeg permitió la publicación de Teeth3DS, que se convirtió en el primer conjunto de datos público con tales características 
+\cite{ben-hamadou3DTeethSeg223DTeeth2023}. La aparición de estos recursos ayuda a desarrollar y evaluar métodos automáticos para la segmentación, identificación y análisis de la 
+dentición tridimensional, en un contexto donde el interés científico por estos temas va en aumento, como muestra la Figura~\ref{fig:scopus}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{imagenes/scopus_publicaciones.png}
+    \caption{Número de documentos por año en Scopus para la consulta \texttt{TITLE-ABS-KEY((``intraoral scan*'' OR ``dental model*'' OR ``dental mesh*'') AND (``tooth segmentation'' OR ``teeth segmentation''))}, realizada el 12 de octubre de 2026. La barra rayada corresponde al año en curso, todavía incompleto.}
+    \label{fig:scopus}
+\end{figure}
+
 
 \section{Objetivos}
 \label{sec:objetivos}
