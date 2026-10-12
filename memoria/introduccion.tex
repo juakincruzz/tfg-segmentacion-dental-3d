@@ -44,6 +44,16 @@ Además, se puede hacer el escaneo sin necesidad de retirar los brackets, permit
 \cite{leeClinicalApplicationIntraoral2024}. Sin embargo, los brackets quedan adheridos a la superficie del diente como piezas que no forman parte de él, ocultan su verdadera forma y 
 complican su segmentación y etiquetado \cite{ben-hamadou3DTeethSeg223DTeeth2023}.
 
+El tipo de imagen más utilizado en el campo dental es la ortopantomografía (OPT), una radiografía panorámica que captura en una sola imagen bidimensional ambas arcadas
+y sus estructuras adyacentes \cite{barcoDeteccionSegmentacion2025}. Al ser una proyección plana, las estructuras se superponen y, además, la imagen presenta distorsiones, ya que la 
+ampliación no se distribuye de manera uniforme a lo largo de toda la imagen \cite{barcoDeteccionSegmentacion2025}. Por otro lado, el escaneo intraoral proporciona información 
+complementaria: aunque no revela estructuras internas como las raíces o el hueso, representa la superficie real de cada diente en tres dimensiones, a escala y con color, sin superposiciones
+y evitando la exposición del paciente a radiación \cite{forrestForensicOdontologyDVI2019}. Investigaciones anteriores del mismo grupo se centraron en la detección, segmentación e 
+identificación de dientes en imágenes OPT mediante aprendizaje profundo \cite{barcoDeteccionSegmentacion2025}. Se observó que los errores se concentraban en molares, dado que son los 
+dientes que más frecuentemente están ausentes, lo que provoca que el modelo tenga menos referencias anatómicas para diferenciar estos dientes \cite{barcoDeteccionSegmentacion2025}. 
+El presente trabajo lleva el desafío al ámbito tridimensional y se enfoca precisamente en esta complejidad: asignar a cada diente su número FDI de manera coherente con el resto de la 
+arcada, aun en casos de dientes ausentes.
+
 \subsection{Identificación forense y odontología clínica}
 \label{subsec:forense-clinica}
 
