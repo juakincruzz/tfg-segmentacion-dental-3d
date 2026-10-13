@@ -34,7 +34,14 @@ data/           Datos (no versionado)
 
 ## Estado
 
-Fase inicial: revisión bibliográfica. Todavía no hay código.
+Revisión bibliográfica y redacción de la introducción de la memoria. El código actual es de exploración de los datos:
+
+- `src/teeth3ds.py`: lectura de escaneos de Teeth3DS y utilidades de numeración FDI.
+- `src/conteo_dientes.py`: estadística de dientes presentes y ausentes por escaneo.
+- `src/explorar_pyg.py`: carga de un escaneo en PyTorch Geometric como malla, grafo y nube de puntos.
+- `src/figura_scopus.py`: figura de publicaciones por año a partir de una exportación de Scopus.
+
+Las pruebas se ejecutan con `pytest tests/`. Las de carga en PyTorch Geometric necesitan `torch`, `torch_geometric` y `trimesh`.
 
 ## Licencia
 
