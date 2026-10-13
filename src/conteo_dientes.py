@@ -23,6 +23,11 @@ from teeth3ds import (
 
 
 def contar(raiz):
+    """Devuelve una fila por escaneo con sus dientes presentes y ausentes.
+
+    n_instancias se guarda aparte para comprobar después que cada diente
+    tiene un número FDI distinto.
+    """
     filas = []
     for ruta in listar_escaneos(raiz):
         anotacion = leer_anotacion(ruta)
@@ -40,6 +45,12 @@ def contar(raiz):
 
 
 def resumir(filas):
+    """Imprime el resumen y devuelve el número de dientes de cada escaneo.
+
+    Los porcentajes se dan también sin terceros molares, porque faltan con
+    mucha frecuencia (sobre todo en pacientes jóvenes) e inflarían la tasa
+    de ausencias.
+    """
     n = np.array([len(f["presentes"]) for f in filas])
     sin_terceros = np.array(
         [sum(not es_tercer_molar(d) for d in f["presentes"]) for f in filas]
@@ -69,9 +80,12 @@ def resumir(filas):
 
 
 def dibujar_histograma(n, ruta):
+    """Guarda el histograma de dientes por escaneo en ruta."""
+    # matplotlib solo hace falta si se pide la figura.
     import matplotlib.pyplot as plt
 
     fig, ax = plt.subplots(figsize=(6, 3.5))
+    # Bordes desplazados 0.5 para que cada barra quede centrada en un entero.
     ax.hist(n, bins=np.arange(n.min(), 18) - 0.5, edgecolor="white")
     ax.set_xlabel("Dientes presentes en el escaneo")
     ax.set_ylabel("Número de escaneos")

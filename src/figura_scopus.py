@@ -15,7 +15,11 @@ import matplotlib.pyplot as plt
 
 
 def leer_csv_scopus(ruta):
-    """Devuelve {año: número de documentos} ignorando la cabecera de Scopus."""
+    """Devuelve {año: número de documentos} ignorando la cabecera de Scopus.
+
+    Scopus añade líneas de texto antes de los datos; solo se conservan las
+    filas cuyas dos primeras columnas son números. utf-8-sig quita el BOM.
+    """
     conteo = {}
     with open(ruta, newline="", encoding="utf-8-sig") as f:
         for fila in csv.reader(f):
@@ -25,6 +29,11 @@ def leer_csv_scopus(ruta):
 
 
 def dibujar(conteo, anio_busqueda, ruta_salida):
+    """Dibuja el diagrama de barras y lo guarda en ruta_salida.
+
+    El eje va del primer año del CSV al de la búsqueda: así se descartan
+    los años posteriores y los años sin publicaciones aparecen con 0.
+    """
     anios = list(range(min(conteo), anio_busqueda + 1))
     valores = [conteo.get(a, 0) for a in anios]
 

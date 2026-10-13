@@ -18,10 +18,16 @@ FDI_POR_ARCADA = {"upper": FDI_SUPERIOR, "lower": FDI_INFERIOR}
 
 
 def es_tercer_molar(fdi):
+    """Indica si el diente es un tercer molar (posición 8: 18, 28, 38, 48)."""
     return fdi % 10 == 8
 
 
 def leer_anotacion(ruta_json):
+    """Lee el JSON de un escaneo y convierte labels e instances en arrays.
+
+    Devuelve el diccionario del JSON tal cual, con las claves "id_patient",
+    "jaw" ("upper" o "lower"), "labels" e "instances".
+    """
     with open(ruta_json) as f:
         anotacion = json.load(f)
     anotacion["labels"] = np.asarray(anotacion["labels"], dtype=np.int64)
@@ -40,7 +46,10 @@ def dientes_ausentes(presentes, arcada):
 
 
 def listar_escaneos(raiz):
-    """Devuelve las rutas a los JSON de todos los escaneos bajo raiz."""
+    """Devuelve las rutas a los JSON de todos los escaneos bajo raiz.
+
+    Espera la estructura de Teeth3DS: raiz/<arcada>/<id>/<id>_<arcada>.json.
+    """
     return sorted(Path(raiz).glob("*/*/*.json"))
 
 
