@@ -58,17 +58,16 @@ Aparte de los brackets, el escaneo intraoral enfrenta otras dificultades propias
 forman una superficie continua, por lo que delimitar cada diente resulta complicado \cite{cuiTSegNetEfficientAccurate2021}. Cuando los dientes están apiñados, las divisiones entre
 dientes adyacentes no son evidentes, y así, dos dientes cercanos pueden ser confundidos como uno solo \cite{ben-hamadou3DTeethSeg223DTeeth2023}.
 
-% ACTUALIZAR con las 6 partes: 4,7 %, 35 % e histograma (src/conteo_dientes.py)
 La falta de dientes presenta un problema diferente, relacionado con la numeración. En el sistema de notación FDI, cada número está vinculado a una ubicación específica en la arcada, por
 lo que si un diente está ausente, su número no se cambia: si el segundo premolar (35) no está, el diente adyacente al primer premolar continúa siendo el primer molar (36). Si se 
 utilizara un método que numerara los dientes según su secuencia de aparición, el primer molar recibiría el número 35, y a partir de ahí se desplazaría la numeración de todos los dientes
-siguientes. Esta situación no es inusual. En los 300 escaneos revisados de Teeth3DS, únicamente un 4{,}7\,\% muestra la arcada completa de 16 dientes, y el 35\,\% presenta al menos una 
+siguientes. Esta situación no es inusual. En los 1800 escaneos de Teeth3DS, únicamente un 3{,}2\,\% muestra la arcada completa de 16 dientes, y el 38{,}8\,\% presenta al menos una 
 ausencia aun sin contar los terceros molares (Figura~\ref{fig:histograma-dientes}).
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.75\textwidth]{imagenes/histograma_dientes.png}
-    \caption{Número de dientes presentes por escaneo en los 300 escaneos de la primera de las seis partes de Teeth3DS. Solo el 4{,}7\,\% contiene la arcada completa de 16 dientes.}
+    \caption{Número de dientes presentes por escaneo en los 1800 escaneos de Teeth3DS, correspondientes a 900 pacientes. Solo el 3{,}2\,\% contiene la arcada completa de 16 dientes.}
     \label{fig:histograma-dientes}
 \end{figure}
 
