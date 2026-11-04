@@ -1,0 +1,29 @@
+\chapter{Fundamentos teóricos}
+\label{cap:fundamentos}
+
+En este capítulo se presentan los fundamentos teóricos y técnicos necesarios para comprender el desarrollo del trabajo. Se describen la anatomía y la notación dental, las representaciones de datos tridimensionales, las técnicas de aprendizaje profundo aplicadas a estructuras 3D, el problema de asignación y las métricas de evaluación, con el fin de establecer las bases para el diseño y la evaluación del sistema propuesto.
+
+\section{Anatomía y notación dental}
+\label{sec:notacion-dental}
+
+En primer lugar, se describirá la anatomía dental, distinguiendo los cuatro tipos de dientes presentes en la dentición permanente: incisivos, caninos, premolares y molares, así como sus principales características morfológicas. A continuación, se explicará el sistema de numeración FDI, que permite identificar cada pieza dental mediante un código de dos cifras. Por último, se analizarán las posibles causas de ausencia dental, como la pérdida de piezas, la falta de erupción o la agenesia. Estas situaciones resultan especialmente relevantes para el etiquetado automático, puesto que la presencia de posiciones vacantes dificulta la asignación correcta de las etiquetas dentales.
+
+\section{Representación de datos tridimensionales}
+\label{sec:representacion-3d}
+
+En esta sección se describirán las principales representaciones de datos tridimensionales utilizadas en el procesamiento de escaneos intraorales 3D: mallas, nubes de puntos y grafos. Se explicarán sus características y las transformaciones que permiten obtener una nube de puntos o un grafo a partir de una malla, así como las ventajas y limitaciones de cada representación en términos de información geométrica, conectividad y coste computacional. Finalmente, se analizará cómo la elección de la representación condiciona las arquitecturas de aprendizaje profundo que pueden emplearse para la segmentación y el etiquetado dental.
+
+\section{Aprendizaje profundo sobre datos tridimensionales}
+\label{sec:aprendizaje-3d}
+
+En esta sección se abordarán las principales arquitecturas de aprendizaje profundo diseñadas para procesar datos tridimensionales. Dado que las redes convolucionales convencionales requieren una estructura regular con posiciones de vecindad fijas, no pueden aplicarse directamente a nubes de puntos, cuya disposición carece de un orden establecido. Se describirán arquitecturas como PointNet, PointNet++ y DGCNN, así como los modelos basados en \textit{transformers} para nubes de puntos, prestando especial atención a sus diferencias en el tratamiento de la información geométrica y las relaciones de vecindad. Estos fundamentos permitirán comprender las arquitecturas empleadas en los métodos de segmentación dental que se analizarán en el Capítulo~\ref{cap:estado-arte}.
+
+\section{El problema de asignación}
+\label{sec:asignacion}
+
+En esta sección se abordará el problema de asignación aplicado al etiquetado dental, cuyo objetivo será establecer una correspondencia entre los dientes detectados y las posiciones definidas por el sistema FDI. Se explicará el funcionamiento del método húngaro, que permite obtener una asignación global de coste mínimo y evitar que una misma etiqueta se asigne a varios dientes. Asimismo, se describirá cómo este procedimiento permite mantener posiciones sin asignar. Con ello, se establecerán los fundamentos para garantizar la coherencia de la numeración en el sistema propuesto.
+
+\section{Métricas de evaluación}
+\label{sec:metricas}
+
+En esta sección se presentarán las métricas utilizadas para evaluar los resultados de la segmentación y el etiquetado dental. Se describirán las tres métricas del reto 3DTeethSeg: TLA (\textit{Teeth Localization Accuracy}), TSA (\textit{Teeth Segmentation Accuracy}) y TIR (\textit{Teeth Identification Rate}), que permiten evaluar la localización, la segmentación y la identificación de las piezas dentales, respectivamente. Asimismo, se analizarán sus limitaciones para evaluar de forma explícita la coherencia global de la numeración FDI. Por último, se introducirán métricas complementarias orientadas a detectar etiquetas duplicadas, desplazamientos en cadena y otras inconsistencias en la asignación de posiciones dentales.
