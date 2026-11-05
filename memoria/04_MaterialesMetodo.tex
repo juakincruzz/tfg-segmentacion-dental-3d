@@ -1,0 +1,168 @@
+\chapter{Materiales y métodos}
+\label{cap:materiales-metodos}
+
+En este capítulo se describen los materiales y procedimientos empleados para el desarrollo del sistema propuesto. Se presentan el conjunto de datos utilizado, las técnicas de preprocesado, el protocolo de validación experimental, los métodos comparados y el entorno de trabajo, con el fin de establecer una metodología reproducible que permita evaluar la segmentación y la coherencia del etiquetado dental.
+
+\section{Conjunto de datos}
+\label{sec:datos}
+
+Para el desarrollo de este trabajo se utilizará Teeth3DS, un conjunto de datos público de escaneos intraorales 3D publicado en el contexto del reto 3DTeethSeg22, celebrado en MICCAI 2022 \cite{ben-hamadouTeeth3DSExtendedBenchmark2026}. El conjunto contiene 1.800 escaneos correspondientes a 900 pacientes, cada uno con una arcada superior y otra inferior, y se distribuye bajo la licencia CC BY-NC-ND 4.0. Cada escaneo consta de un archivo \texttt{.obj}, que almacena la malla tridimensional, y un archivo \texttt{.json}, que contiene las anotaciones de referencia, incluyendo las etiquetas FDI y los identificadores de instancia de cada vértice, donde la etiqueta 0 corresponde a la encía. Las partes 1 y 2 se descargaron el 12 de octubre de 2026 y las partes 3 a 7 el 3 de noviembre de 2026. Los datos utilizados proceden de Teeth3DS+, una versión ampliada del conjunto original, de la que se han seleccionado los 1.800 escaneos anotados correspondientes a Teeth3DS. Se descartó la séptima parte, compuesta por 100 escaneos de 68 pacientes sin anotaciones, al no resultar adecuada para el entrenamiento ni la evaluación supervisada. 
+
+El análisis del conjunto identificó 449 pacientes sin ausencias dentales, 110 con una ausencia y 341 con dos o más, excluyendo los terceros molares del recuento. Asimismo, se observó que cuatro ausencias constituían el caso más frecuente después de los pacientes sin ausencias, con 103 pacientes, lo que podría estar relacionado con la falta de erupción de los segundos molares. Finalmente, se detectaron 12 escaneos (0{,}7\,\%) con etiquetas FDI duplicadas, cuyo tratamiento se abordará en la Sección~\ref{sec:preprocesado}. La distribución del número de dientes presentes se muestra en la Figura~\ref{fig:histograma-dientes}.
+
+\section{Preprocesado}
+\label{sec:preprocesado}
+
+En primer lugar, se revisarán los 12 escaneos con etiquetas FDI duplicadas para determinar si sus anotaciones pueden corregirse de forma fiable. En caso contrario, se excluirán únicamente los escaneos afectados antes de realizar la división de los datos, documentando sus identificadores y conservándolos como casos ilustrativos de errores de numeración. A continuación, se realizará un muestreo inicial de 16.000 puntos por escaneo mediante \textit{farthest point sampling} (FPS), con el fin de reducir el coste computacional y mantener una distribución espacial adecuada. Esta cantidad se evaluará experimentalmente para determinar su idoneidad. Posteriormente, se normalizarán las coordenadas de cada nube de puntos, trasladando su centroide al origen y escalándola a una esfera de radio unitario. Se conservarán el centroide y el factor de escala originales para recuperar las dimensiones físicas cuando sea necesario. Asimismo, se evitarán transformaciones como el reflejo especular de la malla, que intercambia los lados izquierdo y derecho del paciente y altera la correspondencia entre los cuadrantes dentales. Por último, las predicciones obtenidas sobre los puntos muestreados se transferirán a la malla original, asignando a cada vértice la etiqueta del punto muestreado más cercano, permitiendo así calcular las métricas de evaluación sobre todos sus vértices.
+
+\section{Protocolo de validación experimental}
+\label{sec:protocolo}
+
+La división del conjunto de datos se realizará por paciente y no por escaneo, con el fin de evitar posibles fugas de información entre los conjuntos de entrenamiento y prueba. Dado que cada paciente dispone de dos escaneos, correspondientes a las arcadas superior e inferior, ambos se asignarán al mismo conjunto. De esta forma, se evitará que las características anatómicas compartidas por los escaneos de un mismo paciente puedan producir resultados de evaluación excesivamente optimistas.
+
+Asimismo, se realizará una división estratificada según el número de ausencias dentales de cada paciente, excluyendo los terceros molares de este recuento. Para ello, se establecerán tres categorías: pacientes sin ausencias, con una ausencia y con dos o más ausencias, cuya distribución se presenta en la Sección~\ref{sec:datos}. Esta estratificación permitirá mantener una distribución similar de los distintos casos entre los conjuntos de entrenamiento y prueba, lo que resulta especialmente relevante para evaluar el comportamiento del sistema ante la presencia de piezas dentales ausentes. Además, dado que cada paciente aporta una arcada superior y otra inferior, la proporción entre ambos tipos de escaneo se mantendrá equilibrada de forma automática.
+
+De los 900 pacientes disponibles, se destinará el 80\,\% al conjunto de entrenamiento y desarrollo (720 pacientes) y el 20\,\% restante al conjunto de prueba (180 pacientes). A su vez, el primer conjunto se dividirá en un 80\,\% para el entrenamiento de la red neuronal (576 pacientes) y un 20\,\% para su validación (144 pacientes). Esta distribución permitirá ajustar los parámetros del modelo y supervisar su aprendizaje sin utilizar los datos reservados para la evaluación final.
+
+En cuanto a la estrategia de validación, se empleará una división fija (\textit{holdout}) para la red neuronal, puesto que su elevado coste de entrenamiento dificulta la aplicación de técnicas que requieran entrenarla repetidamente. En cambio, para el ajuste de los pesos de la función de coste del método húngaro se aplicará una validación cruzada de cinco particiones sobre los datos de validación, manteniendo fija la red previamente entrenada. Este procedimiento permitirá evaluar diferentes combinaciones de pesos sin repetir el entrenamiento de la red neuronal. Se descartará la validación cruzada anidada (\textit{nested cross-validation}) del sistema completo, puesto que entrenar nuevamente la red neuronal en cada partición exterior multiplicaría considerablemente el coste computacional. Cabe señalar que el conjunto de validación se empleará tanto para supervisar el entrenamiento de la red neuronal como para ajustar los pesos del método húngaro, utilizando en este último caso las predicciones obtenidas sobre pacientes no incluidos en el entrenamiento.
+
+El conjunto de prueba permanecerá separado durante todo el desarrollo y se utilizará exclusivamente para la evaluación final, una vez establecidos los parámetros de la red neuronal y del método de asignación. Por último, se establecerá una división propia de Teeth3DS con el objetivo de garantizar la separación por paciente y una representación adecuada de los casos con ausencias dentales. La decisión de no utilizar directamente la división oficial se justificará mediante la comprobación de sus características y su adecuación a estos criterios.
+
+\section{Métodos comparados}
+\label{sec:metodos}
+
+El sistema propuesto se estructurará en dos etapas: segmentación y numeración dental. En la primera se utilizará una única red de segmentación (S1), cuyos resultados servirán como entrada común para los tres métodos de numeración comparados: asignación independiente (N1), ordenación por la curva de la arcada (N2) y asignación mediante el método húngaro (N3). Esta configuración permitirá atribuir las diferencias observadas a las estrategias de numeración, manteniendo constante la segmentación. Asimismo, se realizará un estudio de ablación del método N3, evaluando por separado los términos de forma y posición de la función de coste, así como su combinación, con el fin de determinar la contribución de cada componente. Por último, cada método se presentará mediante una ficha que recogerá su entrada, salida, funcionamiento, ventajas, inconvenientes y justificación de su inclusión.
+
+\subsection{Segmentación}
+\label{subsec:metodo-segmentacion}
+
+La Tabla~\ref{tab:metodo-s1} presenta el método S1, basado en PointNet++, que se utilizará como etapa común de segmentación para las diferentes estrategias de numeración dental.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{p{0.25\textwidth} p{0.67\textwidth}}
+         \hline 
+         \textbf{Entrada} &
+         Nube de 16.000 puntos por escaneo, con coordenadas tridimensionales normalizadas y, opcionalmente, normales de la superficie. \\
+
+         \textbf{Salida} &
+         Para cada punto, probabilidades de pertenencia a las clases FDI o encía y un vector de desplazamiento hacia el centroide del diente correspondiente. \\
+
+         \textbf{Funcionamiento} &
+         PointNet++ \cite{qiPointNetDeepHierarchical2017} extrae características geométricas locales y predice las probabilidades de clase y los desplazamientos. Los puntos desplazados se agrupan mediante DBSCAN \cite{DBLP:conf/kdd/EsterKSX96} para obtener instancias dentales independientes de sus etiquetas. Para cada instancia se calcula la media de las probabilidades FDI. Este procedimiento se inspira en la estrategia de CGIP \cite{ben-hamadou3DTeethSeg223DTeeth2023}. \\
+
+         \textbf{Ventajas} &
+         Procesa directamente nubes de puntos, aprende características locales y permite separar las instancias dentales de su numeración. Proporciona una base común para comparar N1, N2 y N3. \\
+
+         \textbf{Inconvenientes} &
+         Puede presentar dificultades con dientes apiñados y límites poco definidos entre dientes y encía. Los errores en la predicción de desplazamiento o en el agrupamiento pueden afectar a los métodos de numeración posteriores. \\
+
+         \textbf{Por qué se incluye} &
+         Permite establecer una línea base de segmentación relativamente sencilla, siguiendo la recomendación de comenzar con una arquitectura menos compleja. Su utilización común permite evaluar las diferencias entre los métodos de numeración sin modificar la red de segmentación. \\
+         \hline
+    \end{tabular}
+    \caption{Ficha del método S1: segmentación basada en PointNet++.}
+    \label{tab:metodo-s1}
+\end{table}
+
+\subsection{Numeración}
+\label{subsec:metodos-numeracion}
+
+La Tabla~\ref{tab:metodo-n1} presenta el método N1, utilizado como línea base para comparar las distintas estrategias de numeración.
+
+% Tabla de N1
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{p{0.25\textwidth} p{0.67\textwidth}}
+         \hline 
+         \textbf{Entrada} &
+         Dientes segmentados y probabilidades FDI de sus puntos. \\
+
+         \textbf{Salida} &
+         Una etiqueta FDI por cada diente detectado. \\
+
+         \textbf{Funcionamiento} &
+         Se calcula la media de las probabilidades de los puntos de cada diente y se selecciona la etiqueta FDI con mayor probabilidad. \\
+
+         \textbf{Ventajas} &
+         Implementación sencilla, bajo coste computacional y sin necesidad de información del resto de la arcada. \\
+
+         \textbf{Inconvenientes} &
+         No garantiza etiquetas únicas, no identifica explícitamente las posiciones ausentes y puede confundir dientes de morfología similar. \\
+
+         \textbf{Por qué se incluye} &
+         Se utiliza como línea base para evaluar las mejoras de los métodos N2 y N3. Representa una estrategia de etiquetado independiente, como la empleada en TSegNet \cite{cuiTSegNetEfficientAccurate2021}. \\
+         \hline
+    \end{tabular}
+    \caption{Ficha del método N1: numeración independiente.}
+    \label{tab:metodo-n1}
+\end{table}
+
+La Tabla~\ref{tab:metodo-n2} describe el método N2, basado en la ordenación de los dientes a lo largo de la arcada.
+
+% Tabla de N2
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{p{0.25\textwidth} p{0.67\textwidth}}
+        \hline
+         \textbf{Entrada} &  
+         Dientes segmentados, probabilidades FDI y centroides de cada diente. \\
+         
+         \textbf{Salida} &
+         Una etiqueta FDI por cada diente detectado, considerando su posición relativa en la arcada. \\
+
+         \textbf{Funcionamiento} &
+         Se proyectan los centroides en el plano horizontal (xOy) y se ajusta una parábola para ordenar los dientes. Se utiliza este orden junto con las probabilidades FDI para corregir posibles errores de numeración. El procedimiento está inspirado en el postprocesado de IGIP, sin constituir una reproducción exacta. \\
+
+         \textbf{Ventajas} &
+         Permite corregir etiquetas duplicadas y errores de orden. No requiere entrenamiento adicional, al tratarse de un postprocesado geométrico. \\
+
+         \textbf{Inconvenientes} &
+         No permite identificar las posiciones dentales ausentes, ya que la numeración se basa en el orden de los dientes detectados. Además, si un diente se desplaza hacia una posición vacía, pueden producirse desplazamientos en cadena de la numeración. \\
+
+         \textbf{Por qué se incluye} &
+         Se utiliza como referencia para evaluar métodos que incorporan información posicional. IGIP obtuvo el tercer puesto en la clasificación general y el primero en identificación (TIR de 0{,}9289) en el reto 3DTeethSeg22 \cite{ben-hamadou3DTeethSeg223DTeeth2023}. \\
+         \hline
+    \end{tabular} 
+    \caption{Ficha del método N2: ordenación por la curva de la arcada.}
+    \label{tab:metodo-n2}
+\end{table}
+
+La Tabla~\ref{tab:metodo-n3} recoge el método N3, que constituye la propuesta principal de este trabajo mediante una asignación global de etiquetas FDI.
+
+% Tabla de N3
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{p{0.25\textwidth} p{0.67\textwidth}}
+        \hline
+         \textbf{Entrada} &  
+         Dientes segmentados, probabilidades FDI, centroides y mapa fijo de posiciones dentales esperadas, calculado a partir del conjunto de entrenamiento. \\
+         
+         \textbf{Salida} &
+         Etiquetas FDI únicas para los dientes asignados e identificación de las posiciones dentales vacantes. \\
+
+         \textbf{Funcionamiento} &
+         Se construye una matriz de costes que combina las probabilidades FDI y las distancias respecto a las posiciones del mapa fijo. El método húngaro \cite{kuhnHungarianMethodAssignment1955} obtiene la asignación global de coste mínimo, permitiendo posiciones sin asignar. \\
+
+         \textbf{Ventajas} &
+         Garantiza etiquetas únicas, contempla las ausencias dentales y combina información de clasificación y posición para mejorar la coherencia de la numeración. \\
+
+         \textbf{Inconvenientes} &
+         Requiere definir el mapa fijo y ajustar los pesos de la función de coste. Depende de la calidad de la segmentación y necesita mecanismos adicionales para gestionar falsos positivos y desplazamientos dentales pronunciados. \\
+
+         \textbf{Por qué se incluye} &
+         Constituye la propuesta principal del TFG. Permite evaluar si la asignación global mejora la coherencia de la numeración respecto a N1 y N2, especialmente ante ausencias dentales. \\
+         \hline
+    \end{tabular} 
+    \caption{Ficha del método N3: asignación mediante el método húngaro.}
+    \label{tab:metodo-n3}
+\end{table}
+
+\section{Entorno de trabajo}
+\label{sec:entorno}
+
+El desarrollo y las pruebas del sistema se realizarán en un equipo local con un procesador AMD Ryzen 7 5800X, 32 GB de memoria RAM y una tarjeta gráfica NVIDIA RTX 4070 de 12 GB. Además, los entrenamientos de mayor coste computacional podrán ejecutarse en el clúster de GPU de la Universidad de Granada, gestionado mediante Slurm.
+
+% PENDIENTE: nombre del clúster, cola de Slurm y modelo de GPU.
+
+El entorno de desarrollo utilizará Ubuntu 26.04 y Python 3.14.4, junto con PyTorch 2.11 y CUDA 12.8 para el entrenamiento de modelos. Asimismo, se emplearán PyTorch Geometric 2.8 para el procesamiento de datos geométricos y trimesh para la lectura y manipulación de mallas tridimensionales. Con el fin de garantizar la reproducibilidad de los experimentos, las versiones exactas de las dependencias se recogen en \texttt{requirements.txt}. El código fuente se mantendrá en un repositorio público de GitHub (\url{https://github.com/juakincruzz/tfg-segmentacion-dental-3d}), con Git como sistema de control de versiones. Las pruebas automáticas se realizarán sobre mallas sintéticas generadas en el propio código, dado que la licencia del conjunto de datos impide su redistribución.
