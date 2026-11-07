@@ -144,7 +144,7 @@ dentición tridimensional, en un contexto donde el interés científico por esto
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{imagenes/scopus_publicaciones.png}
-    \caption{Número de documentos por año en Scopus para la consulta \texttt{TITLE-ABS-KEY((``intraoral scan*'' OR ``dental model*'' OR ``dental mesh*'') AND (``tooth segmentation'' OR ``teeth segmentation''))}, realizada el 12 de octubre de 2026. La barra rayada corresponde al año en curso, todavía incompleto.}
+    \caption{Número de documentos por año en Scopus para la consulta del Anexo~\ref{anx:consultas}, realizada el 12 de octubre de 2026. La barra rayada corresponde al año en curso, todavía incompleto.}
     \label{fig:scopus}
 \end{figure}
 
@@ -171,18 +171,41 @@ de la numeración dental, es decir, que evite la repetición de números y mante
 \subsection{Planificación temporal}
 \label{subsec:planificacion-temporal}
 
-% PENDIENTE (datos del 12/10/2026, revisar tras la reunión del 13/10):
-% - Defensa: junio 2027. Inicio real: principios de agosto 2026.
-% - 300 h (12 ECTS x 25 h). Llevadas ~20-30 h a 2 h/semana.
-%   Quedan ~33 semanas hasta finales de mayo: hacen falta ~8 h/semana
-%   (menos en enero por exámenes).
-% - Fases propuestas: F1 bibliografía 50 h (ago-nov), F2 datos y entorno
-%   25 h (oct-nov), F3 línea base 70 h (nov-ene), F4 método húngaro 60 h
-%   (ene-mar), F5 evaluación 40 h (mar-abr), F6 memoria 45 h (en paralelo,
-%   ago-may), F7 defensa 10 h (jun).
-% - Diagrama de Gantt (Figura 1.4) y, al final, comparar con la
-%   planificación real y justificar las desviaciones (lo pide la rúbrica).
+El Trabajo de Fin de Grado tiene asignados 12 créditos ECTS, equivalentes a una dedicación estimada de 300 horas, considerando 25 horas por crédito. Su desarrollo se planifica desde principios de agosto de 2026 hasta la defensa prevista para junio de 2027.
 
+La planificación se divide en siete fases: revisión bibliográfica, preparación de los datos y del entorno de trabajo, implementación de la línea base, desarrollo del método de asignación húngaro, evaluación experimental, redacción de la memoria y preparación de la defensa. La distribución temporal de estas actividades se presenta en la Figura~\ref{fig:gantt}.
+
+\begin{figure}[htbp]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{ganttchart}[
+        hgrid, vgrid,
+        x unit=1cm, y unit chart=0.6cm,
+        bar/.append style={fill=blue!30},
+        bar label font=\small,
+        title label font=\small\bfseries
+    ]{1}{11}
+        \gantttitle{2026}{5} \gantttitle{2027}{6} \\
+        \gantttitle{Ago}{1}  \gantttitle{Sep}{1}  \gantttitle{Oct}{1}
+        \gantttitle{Nov}{1}  \gantttitle{Dic}{1}  \gantttitle{Ene}{1}
+        \gantttitle{Feb}{1}  \gantttitle{Mar}{1}  \gantttitle{Abr}{1}
+        \gantttitle{May}{1}  \gantttitle{Jun}{1}  \\
+        \ganttbar{F1. Revisión bibliográfica (40 h)}{1}{4} \\
+        \ganttbar{F2. Datos y entorno (25 h)}{3}{4} \\
+        \ganttbar{F3. Línea base (60 h)}{4}{6} \\
+        \ganttbar{F4. Método de asignación (50 h)}{5}{8} \\
+        \ganttbar{F5. Evaluación experimental (35 h)}{8}{9} \\
+        \ganttbar{F6. Redacción de la memoria (60 h)}{1}{10} \\
+        \ganttbar{F7. Preparación de la defensa (10 h)}{11}{11} \\
+    \end{ganttchart}%
+    }
+    \caption{Planificación temporal del proyecto. Se reservan 20 horas adicionales para imprevistos.}
+    \label{fig:gantt}
+\end{figure}
+
+Aunque las fases siguen una secuencia general, algunas se desarrollan de forma simultánea. En particular, la redacción de la memoria se realiza a lo largo del proyecto, mientras que el desarrollo del método de asignación basado en el método húngaro puede comenzar en paralelo con el entrenamiento de la línea base, utilizando las instancias dentales de referencia para comprobar su funcionamiento.
+
+Asimismo, se establece una reserva de 20 horas para afrontar posibles imprevistos, como problemas durante el entrenamiento de la red que requieran modificar su configuración o repetir experimentos. Esta reserva permitirá introducir ajustes en la planificación sin superar la dedicación total prevista.
 
 \subsection{Planificación económica}
 \label{subsec:planificacion-economica}
