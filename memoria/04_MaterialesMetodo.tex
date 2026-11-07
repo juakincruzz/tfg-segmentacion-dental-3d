@@ -24,7 +24,7 @@ Asimismo, se realizará una división estratificada según el número de ausenci
 
 De los 900 pacientes disponibles, se destinará el 80\,\% al conjunto de entrenamiento y desarrollo (720 pacientes) y el 20\,\% restante al conjunto de prueba (180 pacientes). A su vez, el primer conjunto se dividirá en un 80\,\% para el entrenamiento de la red neuronal (576 pacientes) y un 20\,\% para su validación (144 pacientes). Esta distribución permitirá ajustar los parámetros del modelo y supervisar su aprendizaje sin utilizar los datos reservados para la evaluación final.
 
-En cuanto a la estrategia de validación, se empleará una división fija (\textit{holdout}) para la red neuronal, puesto que su elevado coste de entrenamiento dificulta la aplicación de técnicas que requieran entrenarla repetidamente. En cambio, para el ajuste de los pesos de la función de coste del método húngaro se aplicará una validación cruzada de cinco particiones sobre los datos de validación, manteniendo fija la red previamente entrenada. Este procedimiento permitirá evaluar diferentes combinaciones de pesos sin repetir el entrenamiento de la red neuronal. Se descartará la validación cruzada anidada (\textit{nested cross-validation}) del sistema completo, puesto que entrenar nuevamente la red neuronal en cada partición exterior multiplicaría considerablemente el coste computacional. Cabe señalar que el conjunto de validación se empleará tanto para supervisar el entrenamiento de la red neuronal como para ajustar los pesos del método húngaro, utilizando en este último caso las predicciones obtenidas sobre pacientes no incluidos en el entrenamiento.
+En cuanto a la estrategia de validación, se empleará una división fija (\textit{holdout}) para la red neuronal, puesto que su elevado coste de entrenamiento dificulta la aplicación de técnicas que requieran entrenarla repetidamente. En cambio, para el ajuste de el parámetro de ponderación de la función de coste (Tabla~\ref{tab:metodo-n3}) del método húngaro se aplicará una validación cruzada de cinco particiones sobre los datos de validación, manteniendo fija la red previamente entrenada. Este procedimiento permitirá evaluar diferentes distintos valores de dicho parámetro sin repetir el entrenamiento de la red neuronal. Se descartará la validación cruzada anidada (\textit{nested cross-validation}) del sistema completo, puesto que entrenar nuevamente la red neuronal en cada partición exterior multiplicaría considerablemente el coste computacional. Cabe señalar que el conjunto de validación se empleará tanto para supervisar el entrenamiento de la red neuronal como para ajustar los pesos del método húngaro, utilizando en este último caso las predicciones obtenidas sobre pacientes no incluidos en el entrenamiento.
 
 El conjunto de prueba permanecerá separado durante todo el desarrollo y se utilizará exclusivamente para la evaluación final, una vez establecidos los parámetros de la red neuronal y del método de asignación. Por último, se establecerá una división propia de Teeth3DS con el objetivo de garantizar la separación por paciente y una representación adecuada de los casos con ausencias dentales. La decisión de no utilizar directamente la división oficial se justificará mediante la comprobación de sus características y su adecuación a estos criterios.
 
@@ -142,13 +142,18 @@ La Tabla~\ref{tab:metodo-n3} recoge el método N3, que constituye la propuesta p
          Etiquetas FDI únicas para los dientes asignados e identificación de las posiciones dentales vacantes. \\
 
          \textbf{Funcionamiento} &
-         Se construye una matriz de costes que combina las probabilidades FDI y las distancias respecto a las posiciones del mapa fijo. El método húngaro \cite{kuhnHungarianMethodAssignment1955} obtiene la asignación global de coste mínimo, permitiendo posiciones sin asignar. \\
+         Se construye una matriz de costes que combina las probabilidades FDI y las distancias respecto a las posiciones del mapa fijo. El método húngaro \cite{kuhnHungarianMethodAssignment1955} obtiene la asignación global de coste mínimo, permitiendo posiciones sin asignar. La función de coste combina la información de clasificación y posición mediante un parámetro de ponderación $\alpha$:
+         \[
+         C = \alpha\, C_{\text{forma}} + (1-\alpha)\, C_{\text{posición}},
+         \]
+         
+         donde $C_{\text{forma}}$ representa el coste de clasificación, calculado como el logaritmo negativo de la probabilidad FDI, y $C_{\text{posición}}$ corresponde a la distancia entre el centroide del diente y su posición esperada en el mapa fijo. El parámetro $\alpha \in [0, 1]$ determina la importancia relativa de ambas componentes.\\
 
          \textbf{Ventajas} &
          Garantiza etiquetas únicas, contempla las ausencias dentales y combina información de clasificación y posición para mejorar la coherencia de la numeración. \\
 
          \textbf{Inconvenientes} &
-         Requiere definir el mapa fijo y ajustar los pesos de la función de coste. Depende de la calidad de la segmentación y necesita mecanismos adicionales para gestionar falsos positivos y desplazamientos dentales pronunciados. \\
+         Requiere definir el mapa fijo y ajustar el peso $\alpha$ de la función de coste. Depende de la calidad de la segmentación y necesita mecanismos adicionales para gestionar falsos positivos y desplazamientos dentales pronunciados. \\
 
          \textbf{Por qué se incluye} &
          Constituye la propuesta principal del TFG. Permite evaluar si la asignación global mejora la coherencia de la numeración respecto a N1 y N2, especialmente ante ausencias dentales. \\
