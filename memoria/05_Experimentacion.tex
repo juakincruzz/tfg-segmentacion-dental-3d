@@ -1,0 +1,29 @@
+\chapter{Experimentación}
+\label{cap:experimentacion}
+
+En este capítulo se presentarán la configuración experimental, los resultados y el análisis de los experimentos definidos en el Capítulo~\ref{cap:materiales-metodos}. La exposición se organizará en cinco secciones: configuración experimental, resultados de segmentación, resultados de numeración, análisis por casos con y sin ausencias dentales y discusión. Con ello, se buscará comprobar si la asignación global mejora la coherencia de la numeración dental, especialmente en las arcadas con dientes ausentes.
+
+\section{Configuración experimental}
+\label{sec:exp-configuracion}
+
+En esta sección  se detallarán los parámetros de entrenamiento de S1, incluyendo el número de épocas, el tamaño de lote, el optimizador, la tasa de aprendizaje, las funciones de pérdida, el criterio de parada, las técnicas de aumento de datos y las semillas aleatorias. Asimismo, se especificarán los parámetros de DBSCAN utilizados para obtener las instancias dentales y el tratamiento de las detecciones que superen el número de posiciones disponibles en N3. Se describirán también la normalización de los términos de la función de coste y la búsqueda del parámetro $\alpha$ mediante la validación cruzada establecida en la Sección~\ref{sec:protocolo}, considerando sus valores extremos como las variantes de ablación que utilizan exclusivamente forma o posición. Por último, se indicarán las cantidades de puntos evaluadas y el uso del script oficial \texttt{evaluation.py} del reto 3DTeethSeg'22 para el cálculo de las métricas.
+
+\section{Resultados de segmentación}
+\label{sec:exp-segmentacion}
+
+En esta sección se evaluará el rendimiento del método S1 mediante las métricas TSA y $\exp(-\mathrm{TLA})$, calculadas sobre los vértices de las mallas originales. Asimismo, se analizarán los errores de detección, considerando los dientes no detectados, las instancias fusionadas y las detecciones incorrectas. A partir de los resultados obtenidos en el conjunto de validación, se justificará la elección del número de puntos utilizado para el procesamiento de los escaneos. Por último, se contextualizarán los resultados en relación con las cifras publicadas en el reto 3DTeethSeg'22, sin establecer una comparación experimental directa debido a las diferencias entre los conjuntos de prueba.
+
+\section{Resultados de numeración}
+\label{sec:exp-numeracion}
+
+En esta sección se compararán los métodos de numeración N1, N2 y N3 utilizando las mismas instancias dentales obtenidas mediante S1, de manera que las diferencias observadas puedan atribuirse exclusivamente a las estrategias de numeración. Se partirá de la hipótesis de que, en las arcadas con ausencias dentales, N3 permitirá reducir los desplazamientos en cadena y obtener un TIR superior al de N2. Para comprobarlo, se emplearán la métrica TIR y las medidas complementarias de coherencia descritas en la Sección~\ref{sec:metricas}, incluyendo las etiquetas duplicadas, los desplazamientos en cadena, la identificación de posiciones vacantes y el porcentaje de arcadas con una numeración completamente correcta. Asimismo, se analizará la contribución de los términos de forma y posición mediante un estudio de ablación basado en los valores extremos del parámetro $\alpha$.
+
+\section{Análisis por casos}
+\label{sec:exp-casos}
+
+En esta sección se desglosarán los resultados según el número de ausencias dentales de cada arcada, distinguiendo entre ninguna, una y dos o más ausencias, sin considerar los terceros molares. Este análisis permitirá identificar errores que podrían quedar diluidos en las métricas agregadas (Sección~\ref{sec:ea-sintesis}). Asimismo, se diferenciarán las ausencias terminales, en las que no quedan dientes presentes más allá de la posición ausente en ese lado de la arcada, de las intercaladas, que dejan una posición vacante entre dos dientes presentes. Por último, se estudiarán casos específicos de especial interés, como la posible confusión entre el primer y el segundo molar cuando falta el primero, las ausencias consecutivas y los desplazamientos en cadena de las etiquetas FDI.
+
+\section{Discusión}
+\label{sec:exp-discusion}
+
+En esta sección se interpretarán los resultados obtenidos en relación con la hipótesis planteada en la Sección~\ref{sec:exp-numeracion} y los objetivos del trabajo. En caso de que N3 no presente mejoras con respecto a los demás métodos, se analizarán posibles explicaciones, como los errores de S1, las limitaciones del mapa fijo o la configuración del parámetro $\alpha$. Asimismo, se contrastarán los resultados con los publicados en la literatura, teniendo en cuenta las diferencias entre los conjuntos de prueba, que impiden establecer comparaciones experimentales directas. Por último, se examinarán las limitaciones del estudio, prestando especial atención a la población representada en Teeth3DS, procedente de los ámbitos ortodóncico y protésico, con una elevada proporción de menores, así como a las dificultades que esta distribución de edades supone para extrapolar los resultados a contextos de identificación forense. También se considerarán la dependencia de S1, la sensibilidad del mapa fijo a la migración dental, la calidad de las anotaciones de referencia y la capacidad de generalización a otros conjuntos de datos.
