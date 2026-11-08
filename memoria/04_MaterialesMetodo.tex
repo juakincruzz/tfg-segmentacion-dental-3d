@@ -6,7 +6,7 @@ En este capítulo se describen los materiales y procedimientos empleados para el
 \section{Conjunto de datos}
 \label{sec:datos}
 
-Para el desarrollo de este trabajo se utilizará Teeth3DS, un conjunto de datos público de escaneos intraorales 3D publicado en el contexto del reto 3DTeethSeg22, celebrado en MICCAI 2022 \cite{ben-hamadouTeeth3DSExtendedBenchmark2026}. El conjunto contiene 1.800 escaneos correspondientes a 900 pacientes, cada uno con una arcada superior y otra inferior, y se distribuye bajo la licencia CC BY-NC-ND 4.0. Cada escaneo consta de un archivo \texttt{.obj}, que almacena la malla tridimensional, y un archivo \texttt{.json}, que contiene las anotaciones de referencia, incluyendo las etiquetas FDI y los identificadores de instancia de cada vértice, donde la etiqueta 0 corresponde a la encía. Las partes 1 y 2 se descargaron el 12 de octubre de 2026 y las partes 3 a 7 el 3 de noviembre de 2026. Los datos utilizados proceden de Teeth3DS+, una versión ampliada del conjunto original, de la que se han seleccionado los 1.800 escaneos anotados correspondientes a Teeth3DS. Se descartó la séptima parte, compuesta por 100 escaneos de 68 pacientes sin anotaciones, al no resultar adecuada para el entrenamiento ni la evaluación supervisada. 
+Para el desarrollo de este trabajo se utilizará Teeth3DS, un conjunto de datos público de IOS 3D publicado en el contexto del reto 3DTeethSeg, celebrado en la conferencia MICCAI (\textit{Medical Image Computing and Computer Assisted Intervention}) de 2022 \cite{ben-hamadouTeeth3DSExtendedBenchmark2026}. El conjunto contiene 1.800 escaneos correspondientes a 900 pacientes, cada uno con una arcada superior y otra inferior, y se distribuye bajo la licencia CC BY-NC-ND 4.0. Cada escaneo consta de un archivo \texttt{.obj}, que almacena la malla tridimensional, y un archivo \texttt{.json}, que contiene las anotaciones de referencia, incluyendo las etiquetas FDI y los identificadores de instancia de cada vértice, donde la etiqueta 0 corresponde a la encía. Las partes 1 y 2 se descargaron el 12 de octubre de 2026 y las partes 3 a 7 el 3 de noviembre de 2026. Los datos utilizados proceden de Teeth3DS+, una versión ampliada del conjunto original, de la que se han seleccionado los 1.800 escaneos anotados correspondientes a Teeth3DS. Se descartó la séptima parte, compuesta por 100 escaneos de 68 pacientes sin anotaciones, al no resultar adecuada para el entrenamiento ni la evaluación supervisada. 
 
 El análisis del conjunto identificó 449 pacientes sin ausencias dentales, 110 con una ausencia y 341 con dos o más, excluyendo los terceros molares del recuento. Asimismo, se observó que cuatro ausencias constituían el caso más frecuente después de los pacientes sin ausencias, con 103 pacientes, lo que podría estar relacionado con la falta de erupción de los segundos molares. Finalmente, se detectaron 12 escaneos (0{,}7\,\%) con etiquetas FDI duplicadas, cuyo tratamiento se abordará en la Sección~\ref{sec:preprocesado}. La distribución del número de dientes presentes se muestra en la Figura~\ref{fig:histograma-dientes}.
 
@@ -49,7 +49,7 @@ La Tabla~\ref{tab:metodo-s1} presenta el método S1, basado en PointNet++, que s
          Para cada punto, probabilidades de pertenencia a las clases FDI o encía y un vector de desplazamiento hacia el centroide del diente correspondiente. \\
 
          \textbf{Funcionamiento} &
-         PointNet++ \cite{qiPointNetDeepHierarchical2017} extrae características geométricas locales y predice las probabilidades de clase y los desplazamientos. Los puntos desplazados se agrupan mediante DBSCAN \cite{DBLP:conf/kdd/EsterKSX96} para obtener instancias dentales independientes de sus etiquetas. Para cada instancia se calcula la media de las probabilidades FDI. Este procedimiento se inspira en la estrategia de CGIP \cite{ben-hamadou3DTeethSeg223DTeeth2023}. \\
+         PointNet++ \cite{qiPointNetDeepHierarchical2017} extrae características geométricas locales y predice las probabilidades de clase y los desplazamientos. Los puntos desplazados se agrupan mediante DBSCAN (\textit{Density-Based Spatial Clustering of Applications with Noise}) \cite{DBLP:conf/kdd/EsterKSX96} para obtener instancias dentales independientes de sus etiquetas. Para cada instancia se calcula la media de las probabilidades FDI. Este procedimiento se inspira en la estrategia de CGIP \cite{ben-hamadou3DTeethSeg223DTeeth2023}. \\
 
          \textbf{Ventajas} &
          Procesa directamente nubes de puntos, aprende características locales y permite separar las instancias dentales de su numeración. Proporciona una base común para comparar N1, N2 y N3. \\
@@ -121,7 +121,7 @@ La Tabla~\ref{tab:metodo-n2} describe el método N2, basado en la ordenación de
          No permite identificar las posiciones dentales ausentes, ya que la numeración se basa en el orden de los dientes detectados. Además, si un diente se desplaza hacia una posición vacía, pueden producirse desplazamientos en cadena de la numeración. \\
 
          \textbf{Por qué se incluye} &
-         Se utiliza como referencia para evaluar métodos que incorporan información posicional. IGIP obtuvo el tercer puesto en la clasificación general y el primero en identificación (TIR de 0{,}9289) en el reto 3DTeethSeg22 \cite{ben-hamadou3DTeethSeg223DTeeth2023}. \\
+         Se utiliza como referencia para evaluar métodos que incorporan información posicional. IGIP obtuvo el tercer puesto en la clasificación general y el primero en identificación (TIR de 0{,}9289) en el reto 3DTeethSeg \cite{ben-hamadou3DTeethSeg223DTeeth2023}. \\
          \hline
     \end{tabular} 
     \caption{Ficha del método N2: ordenación por la curva de la arcada.}
@@ -156,7 +156,7 @@ La Tabla~\ref{tab:metodo-n3} recoge el método N3, que constituye la propuesta p
          Requiere definir el mapa fijo y ajustar el peso $\alpha$ de la función de coste. Depende de la calidad de la segmentación y necesita mecanismos adicionales para gestionar falsos positivos y desplazamientos dentales pronunciados. \\
 
          \textbf{Por qué se incluye} &
-         Constituye la propuesta principal del TFG. Permite evaluar si la asignación global mejora la coherencia de la numeración respecto a N1 y N2, especialmente ante ausencias dentales. \\
+         Constituye la propuesta principal de este trabajo. Permite evaluar si la asignación global mejora la coherencia de la numeración respecto a N1 y N2, especialmente ante ausencias dentales. \\
          \hline
     \end{tabular} 
     \caption{Ficha del método N3: asignación mediante el método húngaro.}
@@ -166,7 +166,7 @@ La Tabla~\ref{tab:metodo-n3} recoge el método N3, que constituye la propuesta p
 \section{Entorno de trabajo}
 \label{sec:entorno}
 
-El desarrollo y las pruebas del sistema se realizarán en un equipo local con un procesador AMD Ryzen 7 5800X, 32 GB de memoria RAM y una tarjeta gráfica NVIDIA RTX 4070 de 12 GB. Además, los entrenamientos de mayor coste computacional podrán ejecutarse en el clúster de GPU de la Universidad de Granada, gestionado mediante Slurm.
+El desarrollo y las pruebas del sistema se realizarán en un equipo local con un procesador AMD Ryzen 7 5800X, 32 GB de memoria RAM y una tarjeta gráfica NVIDIA RTX 4070 de 12 GB. Además, los entrenamientos de mayor coste computacional podrán ejecutarse en el clúster de GPU (\textit{Graphics Processing Unit}) de la Universidad de Granada (UGR), gestionado mediante Slurm.
 
 % PENDIENTE: nombre del clúster, cola de Slurm y modelo de GPU.
 
