@@ -25,10 +25,12 @@
 \usepackage{amsmath}
 \usepackage{xspace}
 \usepackage{pgfgantt}
+\usetikzlibrary{positioning, arrows.meta, fit, backgrounds}
 \usepackage{afterpage}
 \usepackage{enumitem}
 \usepackage{longtable}
 \usepackage{eurosym}
+\usepackage{acronym}
 
 
 
@@ -184,6 +186,26 @@ pdfproducer = {pdflatex}
 \tableofcontents
 \listoffigures
 \listoftables
+\chapter*{Acrónimos}
+\addcontentsline{toc}{chapter}{Acrónimos}
+\begin{acronym}[DBSCAN]
+    \acro{DBSCAN}{\textit{Density-Based Spatial Clustering of Applications with Noise}}
+    \acro{DGCNN}{\textit{Dynamic Graph Convolutional Neural Network}}
+    \acro{DVI}{Identificación de víctimas de catástrofes (\textit{Disaster Victim Identification})}
+    \acro{ECTS}{Sistema europeo de transferencia de créditos (\textit{European Credit Transfer System})}
+    \acro{FDI}{Federación Dental Internacional}
+    \acro{FPS}{\textit{Farthest Point Sampling}}
+    \acro{GCN}{Red convolucional de grafos (\textit{Graph Convolutional Network})}
+    \acro{GPU}{Unidad de procesamiento gráfico (\textit{Graphics Proccessing Unit})}
+    \acro{IA}{Inteligencia artificial}
+    \acro{IOS}{Escaneo intraoral (\textit{Intraoral Scan})}
+    \acro{MICCAI}{\textit{Medical Image Computing and Computer Assisted Intervention}}
+    \acro{OPT}{Ortopantomografía}
+    \acro{TIR}{\textit{Teeth Identification Rate}}
+    \acro{TLA}{\textit{Teeth Localization Accuracy}}
+    \acro{TSA}{\textit{Teeth Segmentation Accuracy}}
+    \acro{UGR}{Universidad de Granada}
+\end{acronym}
 
 \mainmatter
 \setlength{\parskip}{5pt}
