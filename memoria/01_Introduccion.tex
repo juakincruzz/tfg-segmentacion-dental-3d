@@ -144,7 +144,7 @@ dentición tridimensional, en un contexto donde el interés científico por esto
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{imagenes/scopus_publicaciones.png}
-    \caption[Número de documentos por año en Scopus] {para la consulta del Anexo~\ref{anx:consultas}, realizada el 12 de ocutbre de 2026. La barra rayada corresponde al año en curso, todavía incompleto.}
+    \caption[Número de documentos por año en Scopus] {Número de documentos por año en Scopus para la consulta del Anexo~\ref{anx:consultas}, realizada el 12 de octubre de 2026. La barra rayada corresponde al año en curso, todavía incompleto.}
     \label{fig:scopus}
 \end{figure}
 
@@ -210,14 +210,33 @@ Asimismo, se establece una reserva de 20 horas para afrontar posibles imprevisto
 \subsection{Planificación económica}
 \label{subsec:planificacion-economica}
 
-% PENDIENTE:
-% - Personal: 300 h x precio/hora de ingeniero junior en España (buscar
-%   fuente citable).
-% - Equipo: torre (Ryzen 7 5800X, 32 GB, RTX 4070, 1 TB), unos 1.200 €
-%   (confirmar). Amortización lineal a 4 años: 11 meses de uso -> 11/48.
-%   Portátil Razer Blade 15 solo si se usa para el TFG.
-% - Software: 0 € (código abierto; Overleaf y Scopus con licencia UGR).
+La estimación económica del proyecto contempla tres conceptos principales: el coste de personal, el equipamiento informático y el software utilizado. No se incluyen los costes indirectos, como el consumo eléctrico o la conexión a Internet. El desglose de los costes considerados se presenta en la Tabla~\ref{tab:costes}.
 
+% PENDIENTE: Redactar el coste de personal cuando se confirme con los tutores el salario bruto anual de referencia, su fuente bibliográfica y la inclusión o no de las cotizaciones empresariales de la Seguridad Social.
+
+El coste del equipamiento se calcula a partir de una torre adquirida en septiembre de 2023 por 1.900 \euro{}, equipada con un procesador AMD Ryzen 7 5800X, 32 GB de RAM y una tarjeta gráfica NVIDIA RTX 4070 de 12 GB. Dado que se considera una vida útil de cuatro años, se aplica una amortización lineal durante 48 meses. En consecuencia, se imputa al proyecto la proporción correspondiente a sus 11 meses de duración, equivalente a 11/48 del precio de adquisición, lo que supone 435{,}42 \euro{}. El portátil, utilizado de forma puntual, no se incluye en esta estimación.
+
+En cuanto al software, herramientas como Python, PyTorch y PyTorch Geometric son de código abierto y no requieren costes de licencia. Asimismo, se dispone de Overleaf y Scopus a través de las licencias proporcionadas por la Universidad de Granada, por lo que tampoco suponen un coste adicional. En cambio, se incluye la suscripción a Claude Pro, con un coste de 18 \euro{} mensuales durante 11 meses, equivalente a 198{,}00 €. El uso de esta herramienta se detalla en la Sección~\ref{sec:uso-ia}.
+
+El coste total estimado del proyecto se obtiene sumando los conceptos anteriores, según recoge la Tabla~\ref{tab:costes}.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{l l r}
+        \hline
+        \textbf{Concepto} & \textbf{Cálculo} & \textbf{Coste (\euro{})} \\
+        \hline 
+        Personal & 300 h $\times$ XX{,}XX \euro{}/h & X.XXX{,}XX \\
+        Equipo (torre) & 1.900 \euro{} $\times$ 11/48 & 435{,}42 \\
+        Claude Pro & 18 \euro{}/mes $\times$ 11 meses & 198{,}00 \\
+        Software libre y licencias UGR & --- & 0{,}00 \\
+        \hline
+        \textbf{Total} & & \textbf{X.XXX{,}XX} \\
+        \hline
+    \end{tabular}
+    \caption{Estimación del coste del proyecto.}
+    \label{tab:costes}
+\end{table}
 
 \section{Uso de herramientas de inteligencia artificial}
 \label{sec:uso-ia}
