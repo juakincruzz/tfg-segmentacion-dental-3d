@@ -48,6 +48,58 @@ El problema que aborda este trabajo se compone de dos tareas. La \textbf{segment
 
 La Figura~\ref{fig:diagrama-sistema} sintetiza el sistema propuesto. A partir del IOS 3D, representado como una malla tridimensional, una etapa inicial distingue cada diente de la encía así como de los dientes adyacentes. En una etapa posterior, se asigna a cada diente su código FDI, considerando la totalidad de la arcada, lo que facilita la identificación de las posiciones vacías. El resultado es la malla original donde cada diente está delimitado y numerado.
 
+\begin{figure}[htbp]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[
+        node distance=6mm and 7mm,
+        caja/.style={draw, rounded corners=2pt, align=center, font=\small,
+                     minimum height=16mm, text width=25mm, fill=white},
+        alt/.style={draw, rounded corners=2pt, align=center, font=\footnotesize,
+                    minimum height=9mm, text width=30mm, fill=white},
+        flecha/.style={-{Stealth[length=2mm]}, thick},
+        etapa/.style={draw=gray!60, dashed, rounded corners=4pt, inner sep=3mm},
+        titulo/.style={font=\footnotesize\bfseries, text=gray!70!black}
+    ]
+        % Entrada y preprocesado
+        \node[caja] (ios) {\textbf{IOS 3D}\\[1mm]\footnotesize malla de\\ $\sim$76.000 vértices};
+        \node[caja, right=of ios] (pre) {\textbf{Preprocesado}\\[1mm]\footnotesize FPS a 16.000\\ puntos y\\ normalización};
+
+        % Etapa 1: segmentación (S1)
+        \node[caja, right=of pre] (red) {\textbf{PointNet++}\\[1mm]\footnotesize por punto:\\ probabilidad FDI\\ y desplazamiento};
+        \node[caja, right=of red] (dbscan) {\textbf{DBSCAN}\\[1mm]\footnotesize sobre los puntos\\ desplazados\\ $\rightarrow$ instancias};
+
+        % Etapa 2: numeración (alternativas comparadas)
+        \node[alt, right=14mm of dbscan] (n2) {\textbf{N2}: orden según\\ la curva de la arcada};
+        \node[alt, above=3mm of n2] (n1) {\textbf{N1}: \textit{argmax}\\ por diente};
+        \node[alt, below=3mm of n2, fill=blue!12, very thick] (n3) {\textbf{N3}: mapa fijo\\ + método húngaro};
+
+        % Salida
+        \node[caja, right=14mm of n2] (out) {\textbf{Malla numerada}\\[1mm]\footnotesize dientes en FDI\\ y posiciones\\ vacías};
+
+        % Flechas
+        \draw[flecha] (ios) -- (pre);
+        \draw[flecha] (pre) -- (red);
+        \draw[flecha] (red) -- (dbscan);
+        \foreach \n in {n1, n2, n3} {
+            \draw[flecha] (dbscan.east) -- (\n.west);
+            \draw[flecha] (\n.east) -- (out.west);
+        }
+
+        % Recuadros de las etapas
+        \begin{scope}[on background layer]
+            \node[etapa, fit=(red)(dbscan)(n1.north -| red.west)(n3.south -| red.west),
+                  label={[titulo]above:Etapa 1: segmentación (S1)}] {};
+            \node[etapa, fit=(n1)(n3),
+                  label={[titulo]above:Etapa 2: numeración}] {};
+        \end{scope}
+    \end{tikzpicture}%
+    }
+    \caption[Diagrama general del sistema]{Diagrama general del sistema. La etapa de segmentación (S1) es común a los tres métodos de numeración que se comparan: N1 y N2 sirven como referencia y N3, resaltado, es la propuesta de este trabajo. Los métodos se detallan en la Sección~\ref{sec:metodos}.}
+    \label{fig:diagrama-sistema}
+\end{figure}
+
+
 \subsection{Solución propuesta}
 \label{subsec:solucion-propuesta}
 
