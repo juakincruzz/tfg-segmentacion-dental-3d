@@ -22,6 +22,7 @@ FICHEROS_ENTRENAMIENTO = ("public-training-set-1.txt", "public-training-set-2.tx
 
 FICHERO_PRUEBA = "private-testing-set.txt"
 
+
 def leer_pacientes(*rutas):
     """Lee los pacientes y comprueba que tengan ambas arcadas.
     
@@ -63,6 +64,7 @@ def leer_pacientes(*rutas):
         )
 
     return set(arcadas)
+
 
 if __name__ == "__main__": 
     parser = argparse.ArgumentParser(

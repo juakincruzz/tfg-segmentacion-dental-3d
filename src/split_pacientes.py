@@ -21,6 +21,7 @@ from teeth3ds import (dientes_ausentes,
                       listar_escaneos
                     )
 
+
 def ausencias_por_paciente(raiz):
     """Devuelve {id_paciente: número de ausencias sin terceros molares}.
     
@@ -64,6 +65,7 @@ def ausencias_por_paciente(raiz):
 
     return dict(ausencias)
 
+
 def estrato(n_ausencias):
     """ Devuelve el estrato del paciente: '0', '1' o '2+'."""
     if n_ausencias < 0: raise ValueError("El número de ausencias no puede ser negativo")
@@ -71,6 +73,7 @@ def estrato(n_ausencias):
     if n_ausencias == 1: return "1"
 
     return "2+"
+
 
 def dividir_estratificado(pacientes, estratos, proporcion, semilla):
     """Divide pacientes manteniendo, aproximadamente, la proporción por estrato.
@@ -109,6 +112,7 @@ def dividir_estratificado(pacientes, estratos, proporcion, semilla):
 
     return sorted(grupo_a), sorted(grupo_b)
 
+
 def guardar(pacientes, ruta):
     """Escribe un escaneo por línea: <id>_upper e <id>_lower."""
     ruta = Path(ruta)
@@ -118,6 +122,7 @@ def guardar(pacientes, ruta):
         for paciente in sorted(pacientes):
             fichero.write(f"{paciente}_upper\n")
             fichero.write(f"{paciente}_lower\n")
+
 
 def resumen(grupos, ausencias):
     """Imprime el número de pacientes y el porcentaje de cada estrato."""
@@ -131,6 +136,7 @@ def resumen(grupos, ausencias):
                             ) if n else "sin pacientes"
 
         print(f"{nombre}: {n} pacientes, {2 * n} escaneos | {detalle}")
+        
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = __doc__.splitlines()[0])
