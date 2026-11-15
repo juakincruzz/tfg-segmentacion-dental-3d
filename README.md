@@ -162,7 +162,7 @@ python src/entrenar.py \
 
 Para utilizar la división oficial, basta con cambiar `--splits` por `data/splits/oficial` y seleccionar otro directorio de salida.
 
-El entrenamiento utiliza Adam y evalúa el modelo después de cada época mediante el conjunto de validación. Se conserva el modelo con el mejor mIoU de validación.
+Se conserva el modelo con el mejor mIoU de validación sin terceros molares, ya que estos faltan en la mayoría de los escaneos y su IoU depende de muy pocos casos.
 
 En el directorio indicado mediante `--salida` se generan:
 

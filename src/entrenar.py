@@ -1,13 +1,13 @@
 """Entrena PointNet++ para la segmentación semántica de Teeth3DS.
 
 Uso:
-
+    python src/entrenar.py --epocas 2
 
 El entrenamiento utiliza los escaneos preprocesados de train.txt y evalúa el modelo 
 al final de cada época utilizando val.txt.
 
 Guarda en el directorio de salida:
-    mejor.pt:       pesos del modelo con mayor mIoU de validación.
+    mejor.pt:       pesos del modelo con mayor mIoU de validación sin terceros molares.
     registro.csv:   pérdida, exactitud, mIoU, learning rate, tiempo y
                     memoria de GPU de cada época.
     iou_mejor.csv:  IoU de cada clase del mejor modelo.
@@ -36,6 +36,12 @@ from dataset import EscaneosProcesados
 from modelo import N_CLASES, PointNet2Seg
 from teeth3ds import FDI_INFERIOR, FDI_SUPERIOR
 
+# Clases de los terceros molares: 18, 28, 38, 48.
+TERCEROS_MOLARES = [
+    clase
+    for clase, fdi in enumerate(FDI_SUPERIOR + FDI_INFERIOR, start = 1)
+    if fdi % 10 == 8
+]
 
 def matriz_confusion(pred, y, n_clases = N_CLASES):
     """Calcula la matriz de confusión.
@@ -56,11 +62,14 @@ def matriz_confusion(pred, y, n_clases = N_CLASES):
 
 
 def metricas(confusion):
-    """Calcula exactitud global, IoU por clase y mIoU.
+    """Calcula exactitud global, IoU por clase, mIoU y mIoU sin terceros molares.
     
     El mIoU solo incluye las clases presentes en las etiquetas reales.
     Las clases ausentes reciben NaN en el vector de IoU y no intervienen
     en la media.
+
+    El mIoU sin terceros molares excluye además las clases 18, 28, 38 y 48,
+    que faltan en la mayoría de los escaneos. Es el que se usa para elegir el mejor modelo.
     """
     confusion = confusion.to(torch.float64)
 
@@ -94,7 +103,21 @@ def metricas(confusion):
         if presentes.any() else float("nan")
     )
 
-    return exactitud, iou, miou
+    # mIoU sin terceros molares.
+    es_tercero = torch.zeros(
+        confusion.size(0), dtype = torch.bool, device = confusion.device
+    )
+
+    es_tercero[TERCEROS_MOLARES] = True
+
+    seleccion = presentes & ~es_tercero
+
+    miou_sin_terceros = (
+        iou[seleccion].mean().item()
+        if seleccion.any() else float("nan")
+    )
+
+    return exactitud, iou, miou, miou_sin_terceros
 
 
 def entrenar_epoca(modelo, loader, optimizador, dispositivo):
@@ -341,6 +364,7 @@ if __name__ == "__main__":
         "perdida_train",
         "exactitud_val",
         "miou_val",
+        "miou_val_sin_3m",
         "lr",
         "segundos",
         "memoria_GB"
@@ -354,7 +378,8 @@ if __name__ == "__main__":
     # 5. Entrenamiento
     # ------------------------------------------------------------
 
-    mejor_miou = -1.0
+    mejor_miou_sin_terceros = -1.0
+    mejor_miou_33 = None
     mejor_epoca = 0
     mejor_iou = None
 
@@ -378,7 +403,7 @@ if __name__ == "__main__":
         )
 
         # Evaluación en validación.
-        exactitud_val, iou_val, miou_val = evaluar(
+        exactitud_val, iou_val, miou_val, miou_sin_terceros = evaluar(
             modelo, val_loader, dispositivo
         )
 
@@ -398,10 +423,11 @@ if __name__ == "__main__":
         # 6. Guardar el mejor modelo
         # ------------------------------------------------------------
 
-        mejora = miou_val > mejor_miou
+        mejora = miou_sin_terceros > mejor_miou_sin_terceros
 
         if mejora:
-            mejor_miou = miou_val
+            mejor_miou_sin_terceros = miou_sin_terceros
+            mejor_miou_33 = miou_val
             mejor_epoca = epoca
             mejor_iou = iou_val.cpu().clone()
 
@@ -421,6 +447,7 @@ if __name__ == "__main__":
                 f"{perdida_train:.6f}",
                 f"{exactitud_val:.6f}",
                 f"{miou_val:.6f}",
+                f"{miou_sin_terceros:.6f}",
                 f"{lr_actual:.8f}",
                 f"{segundos:.2f}",
                 (
@@ -440,6 +467,7 @@ if __name__ == "__main__":
             f"Loss: {perdida_train:.4f} | "
             f"Acc val: {exactitud_val:.4f} | "
             f"mIoU val: {miou_val:.4f} | "
+            f"mIoU sin 3M: {miou_sin_terceros:.4f} | "
             f"LR: {lr_actual:.6f} | "
             f"Tiempo: {segundos:.1f} s"
         )
@@ -458,7 +486,8 @@ if __name__ == "__main__":
 
     print("\n=== RESULTADO FINAL ===")
     print(f"Mejor época: {mejor_epoca}")
-    print(f"Mejor mIoU de validación: {mejor_miou:.4f}")
+    print(f"mIoU de 33 clases: {mejor_miou_33:.4f}")
+    print(f"mIoU sin terceros molares: {mejor_miou_sin_terceros:.4f}")
     print(f"Modelo guardado en: {ruta_mejor}")
     print(f"Registro guardado en: {ruta_registro}")
     print(f"IoU por clase guardado en: {ruta_iou}")
