@@ -44,7 +44,83 @@ Queda pendiente completar la configuración del sistema de segmentación y numer
 \section{Resultados de segmentación}
 \label{sec:exp-segmentacion}
 
-En esta sección se evaluará el rendimiento del método S1 mediante las métricas TSA y $\exp(-\mathrm{TLA})$, calculadas sobre los vértices de las mallas originales. Asimismo, se analizarán los errores de detección, considerando los dientes no detectados, las instancias fusionadas y las detecciones incorrectas. Por último, se contextualizarán los resultados en relación con las cifras publicadas en el reto 3DTeethSeg, sin establecer una comparación experimental directa debido a las diferencias entre los conjuntos de prueba.
+En esta sección se presentan los resultados de la segmentación semántica del método S1 sobre los conjuntos de validación de ambas divisiones de Teeth3DS, utilizando los modelos seleccionados según el criterio descrito en la Sección~\ref{sec:exp-configuracion}. Las métricas se calcularon sobre los puntos muestreados durante el preprocesado, con un máximo de 16.000 puntos por escaneo. Por tanto, estos resultados no son directamente comparables con las métricas oficiales del reto 3DTeethSeg, descritas en la sección de métricas del capítulo 2, que evalúan las predicciones sobre los vértices de las mallas originales y consideran las instancias dentales.
+
+La Figura~\ref{fig:curvas-pointnet2}  muestra la evolución de la pérdida de entrenamiento y del mIoU de validación sin terceros molares durante las 30 épocas. La pérdida disminuyó progresivamente en ambas divisiones, mientras que el mIoU presentó mayores oscilaciones, especialmente durante las primeras épocas. En la división propia, el mIoU pasó de 0{,}599 en la época 4 a 0{,}298 en la época 5, para recuperarse hasta 0{,}652 en la siguiente. En la división oficial se observó una caída similar, desde 0{,}724 en la época 4 hasta 0{,}374 en la época 6.
+
+Tras la primera reducción de la tasa de aprendizaje, aplicada al finalizar la época 10 mediante \texttt{StepLR}, la mejora fue más sostenida. En las diez últimas épocas, el mIoU se situó entre 0{,}808 y 0{,}851 en la división propia y entre 0{,}858 y 0{,}876 en la oficial. Aunque las oscilaciones fueron menores en esta etapa, no desaparecieron por completo. Esta evolución coincidió con las reducciones de la tasa de aprendizaje, sin que las curvas permitan atribuirles por sí solas toda la mejora observada.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/figura_curvas.pdf}
+    \caption{Evolución de la pérdida de entrenamiento y del mIoU de validación sin terceros molares durante las 30 épocas de PointNet++, para las divisiones propia y oficial de Teeth3DS.}
+    \label{fig:curvas-pointnet2}
+\end{figure}
+
+La Tabla~\ref{tab:resultados-globales-s1} recoge las métricas obtenidas por los modelos seleccionados en cada división. La mejor época fue la 24 en la división propia y la 25 en la oficial, con valores de mIoU sin terceros molares de 0{,}851 y 0{,}876, respectivamente. La exactitud global fue superior en ambos casos, con valores de 0{,}944 y 0{,}951. Esta diferencia se relaciona con la elevada proporción de puntos pertenecientes a la encía, cuya clasificación influye considerablemente en la exactitud global, mientras que el mIoU considera el rendimiento de las distintas clases por separado. Asimismo, al incluir los terceros molares, el mIoU disminuyó hasta 0{,}783 y 0{,}793, respectivamente. Esta reducción fue especialmente relevante en la división oficial, donde los tres terceros molares presentes en validación obtuvieron un IoU nulo.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{lcc}
+        \hline
+        \textbf{Métrica} & \textbf{Propio} & \textbf{Oficial} \\
+        \hline
+        Mejor época & 24 & 25 \\
+        Exactitud por punto & 0{,}944 & 0{,}951 \\
+        mIoU (33 clases) & 0{,}783 & 0{,}793 \\
+        mIoU sin terceros molares & 0{,}851 & 0{,}876 \\
+        IoU de la encía & 0{,}949 & 0{,}947 \\
+        \hline
+    \end{tabular}
+    \caption{Resultados de segmentación semántica sobre los conjuntos de validación de ambas divisiones, correspondientes al modelo seleccionado en cada experimento.}
+    \label{tab:resultados-globales-s1}
+\end{table}
+
+Las Tablas~\ref{tab:iou-dientes-propio} y~\ref{tab:iou-dientes-oficial} presentan el IoU de cada posición dental FDI, organizado por cuadrantes. En ambas divisiones, la arcada inferior obtuvo un rendimiento menor que la superior: el IoU medio fue de 0{,}820 frente a 0{,}875 en la división propia y de 0{,}851 frente a 0{,}895 en la oficial, sin considerar los terceros molares. Por grupos dentales, los molares presentaron los valores medios más bajos, con 0{,}821 en la división propia y 0{,}832 en la oficial. Dentro de este grupo, los segundos molares inferiores (37 y 47) registraron los peores resultados, con valores próximos a 0{,}75 en ambas divisiones. Los terceros molares mostraron un rendimiento considerablemente inferior al resto de posiciones dentales. En la división propia, sus valores oscilaron entre 0{,}111 y 0{,}435, mientras que en la oficial fueron nulos para las tres clases presentes en validación. Las posibles causas de estas diferencias se analizan en la Sección~\ref{sec:exp-discusion}.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \begin{tabular}{lcccc}
+         \hline
+         \textbf{Posición dental} & \textbf{C1} & \textbf{C2} & \textbf{C3} & \textbf{C4} \\
+         \hline
+         1. Incisivo central & 0{,}919 & 0{,}905 & 0{,}818 & 0{,}805 \\
+         2. Incisivo lateral & 0{,}889 & 0{,}877 & 0{,}847 & 0{,}828 \\
+         3. Canino & 0{,}868 & 0{,}897 & 0{,}872 & 0{,}877 \\
+         4. Primer premolar & 0{,}889 & 0{,}900 & 0{,}835 & 0{,}875 \\
+         5. Segundo premolar & 0{,}850 & 0{,}827 & 0{,}768 & 0{,}815 \\
+         6. Primer molar & 0{,}904 & 0{,}852 & 0{,}814 & 0{,}831 \\
+         7. Segundo molar & 0{,}860 & 0{,}811 & 0{,}750 & 0{,}749 \\
+         8. Tercer molar & 0{,}435 & 0{,}275 & 0{,}347 & 0{,}111 \\
+         \hline
+    \end{tabular}
+    \caption{IoU por posición dental en la validación de la división propia. C1, C2, C3, C4 corresponden a los cuatro cuadrantes de la nomenclatura FDI.}
+    \label{tab:iou-dientes-propio}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \begin{tabular}{lcccc}
+         \hline
+         \textbf{Posición dental} & \textbf{C1} & \textbf{C2} & \textbf{C3} & \textbf{C4} \\
+         \hline
+         1. Incisivo central & 0{,}927 & 0{,}930 & 0{,}880 & 0{,}866 \\
+         2. Incisivo lateral & 0{,}913 & 0{,}906 & 0{,}897 & 0{,}872 \\
+         3. Canino & 0{,}909 & 0{,}911 & 0{,}906 & 0{,}885 \\
+         4. Primer premolar & 0{,}920 & 0{,}935 & 0{,}882 & 0{,}872 \\
+         5. Segundo premolar & 0{,}864 & 0{,}886 & 0{,}835 & 0{,}795 \\
+         6. Primer molar & 0{,}884 & 0{,}891 & 0{,}872 & 0{,}829 \\
+         7. Segundo molar & 0{,}825 & 0{,}829 & 0{,}773 & 0{,}753 \\
+         8. Tercer molar & -- & 0{,}000 & 0{,}000 & 0{,}000 \\
+         \hline
+    \end{tabular}
+    \caption{IoU por posición dental en la validación de la división oficial. C1, C2, C3, C4 corresponden a los cuatro cuadrantes de la nomenclatura FDI. El guión indica que el tercer molar 18 no aparece en ningún escaneo de validación y, por tanto, no tiene un IoU calculable.}
+    \label{tab:iou-dientes-oficial}
+\end{table}
+
+Queda pendiente completar la evaluación del método S1 mediante la obtención de instancias dentales y la transferencia de las predicciones a los vértices de las mallas originales. Una vez implementadas estas etapas, se calcularán las métricas TSA y $\exp(-\mathrm{TLA})$ mediante el script oficial \texttt{evaluation.py} del reto 3DTeethSeg. Asimismo, se analizarán los errores de detección, incluyendo los dientes no detectados, las instancias fusionadas y las detecciones incorrectas. Finalmente, los resultados se contextualizarán en relación con los publicados en el reto, teniendo en cuenta las diferencias entre los conjuntos de prueba.
 
 \section{Resultados de numeración}
 \label{sec:exp-numeracion}
