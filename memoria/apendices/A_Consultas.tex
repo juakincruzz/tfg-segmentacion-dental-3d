@@ -1,0 +1,15 @@
+\chapter{Consultas bibliográficas}
+\label{anx:consultas}
+
+La Figura~\ref{fig:scopus}, presentada en la Sección~\ref{sec:motivacion}, muestra la evolución anual de las publicaciones relacionadas con la segmentación dental en modelos tridimensionales. Los datos se obtuvieron mediante una búsqueda realizada el 12 de octubre de 2026 en la base de datos Scopus, utilizando el acceso institucional de la Universidad de Granada. La consulta empleó el campo \texttt{TITLE-ABS-KEY}, que permite buscar términos en el título, el resumen y las palabras clave de los documentos.
+
+La expresión de búsqueda utilizada fue la siguiente:
+
+\begin{verbatim}
+TITLE-ABS-KEY ( ( "intraoral scan*" OR "dental model*" OR "dental mesh*" )
+    AND ( "tooth segmentation" OR "teeth segmentation" ) )
+\end{verbatim}
+
+La consulta combina dos grupos de términos. El primero identifica el tipo de datos utilizados, incluyendo IOS 3D, modelos dentales y mallas tridimensionales. El segundo delimita la tarea de interés: la segmentación de dientes. El operador \texttt{OR} permite recuperar documentos que contengan cualquiera de los términos de un mismo grupo, mientras que \texttt{AND} exige que se cumpla al menos una condición de cada grupo. El asterisco actúa como operador de truncamiento y permite recuperar distintas terminaciones de un término, como \textit{scan}, \textit{scans}, \textit{scanner} o \textit{scanning}.
+
+La búsqueda devolvió un total de 161 documentos, con años de publicación comprendidos entre 2001 y 2027. De ellos, uno aparece fechado en 2027, año posterior al de la consulta. Por este motivo, la Figura~\ref{fig:scopus} representa únicamente los 160 documentos correspondientes al periodo 2001--2026. Los datos se exportaron desde la opción \textit{Analyze results} $\rightarrow$ \textit{Documents by year} de Scopus y se conservaron en el archivo \texttt{memoria/datos/scopus\_2026-10-12.csv}.
