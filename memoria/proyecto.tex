@@ -31,9 +31,21 @@
 \usepackage{longtable}
 \usepackage{eurosym}
 \usepackage[nohyperlinks]{acronym}
+\usepackage{array}
 \raggedbottom
 
+% Permitir más flotantes junto al texto antes de mandarlos a una página propia
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.6}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\floatpagefraction}{0.75}
 
+% En las páginas de solo flotantes, colocarlos arriba en vez de centrarlos
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{\floatsep}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
 
 % ********************************************************************
 % Re-usable information
