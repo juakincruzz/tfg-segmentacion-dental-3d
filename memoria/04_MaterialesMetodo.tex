@@ -6,9 +6,9 @@ En este capítulo se describen los materiales y procedimientos empleados para el
 \section{Conjunto de datos}
 \label{sec:datos}
 
-Para el desarrollo de este trabajo se utilizó Teeth3DS, un conjunto de datos público de IOS 3D publicado en el contexto del reto 3DTeethSeg, celebrado en la conferencia MICCAI (\textit{Medical Image Computing and Computer Assisted Intervention}) de 2022 \cite{ben-hamadouTeeth3DSExtendedBenchmark2026}. El conjunto contiene 1.800 escaneos correspondientes a 900 pacientes, cada uno con una arcada superior y otra inferior, y se distribuye bajo la licencia CC BY-NC-ND 4.0. Cada escaneo consta de un archivo \texttt{.obj}, que almacena la malla tridimensional, y un archivo \texttt{.json}, que contiene las anotaciones de referencia, incluyendo las etiquetas FDI y los identificadores de instancia de cada vértice, donde la etiqueta 0 corresponde a la encía. Las partes 1 y 2 se descargaron el 12 de octubre de 2026 y las partes 3 a 7 el 3 de noviembre de 2026. Los datos utilizados proceden de Teeth3DS+, una versión ampliada del conjunto original, de la que se han seleccionado los 1.800 escaneos anotados correspondientes a Teeth3DS. Se descartó la séptima parte, compuesta por 100 escaneos de 68 pacientes sin anotaciones, al no resultar adecuada para el entrenamiento ni la evaluación supervisada. 
+Para el desarrollo de este trabajo se utilizó Teeth3DS, un conjunto de datos público de IOS 3D publicado en el contexto del reto 3DTeethSeg, celebrado en la conferencia MICCAI (\textit{Medical Image Computing and Computer Assisted Intervention}) de 2022 \cite{ben-hamadouTeeth3DSExtendedBenchmark2026}. El conjunto contiene 1.800 escaneos correspondientes a 900 pacientes, cada uno con una arcada superior y otra inferior, y se distribuye bajo la licencia CC BY-NC-ND 4.0. Cada escaneo consta de un archivo \texttt{.obj}, que almacena la malla tridimensional, y un archivo \texttt{.json}, que contiene las anotaciones de referencia, incluyendo las etiquetas FDI y los identificadores de instancia de cada vértice, donde la etiqueta 0 corresponde a la encía. Los datos utilizados proceden de Teeth3DS+, una versión ampliada del conjunto original, de la que se han seleccionado 1.800 escaneos anotados correspondientes a Teeth3DS. Las partes 1 y 2 se descargaron el 12 de octubre de 2026 y las partes 3 a 7 el 3 de noviembre de 2026. Se descartó la séptima parte, compuesta por 100 escaneos de 68 pacientes sin anotaciones, al no resultar adecuada para el entrenamiento ni la evaluación supervisada. 
 
-El análisis del conjunto identificó 449 pacientes sin ausencias dentales, 110 con una ausencia y 341 con dos o más, excluyendo los terceros molares del recuento. Asimismo, se observó que cuatro ausencias constituían el caso más frecuente después de los pacientes sin ausencias, con 103 pacientes, lo que podría estar relacionado con la falta de erupción de los segundos molares. Finalmente, se detectaron 12 escaneos (0{,}7\,\%) con etiquetas FDI duplicadas, cuyo tratamiento se abordará en la Sección~\ref{sec:preprocesado}. La distribución del número de dientes presentes se muestra en la Figura~\ref{fig:histograma-dientes}.
+El análisis del conjunto identificó 449 pacientes sin ausencias dentales, 110 con una ausencia y 341 con dos o más, excluyendo los terceros molares del recuento. Asimismo, se observó que cuatro ausencias constituían el caso más frecuente después de los pacientes sin ausencias, con 103 pacientes. Este patrón podría estar relacionado con la falta de erupción de los segundos molares, ya que alrededor del 70\,\% de los pacientes del conjunto tiene menos de 16 años. Además, todos los escaneos proceden de pacientes que requerían tratamiento ortodóntico o protésico, a partes iguales \cite{ben-hamadou3DTeethSeg223DTeeth2023}, por lo que el conjunto no representa necesariamente a la población adulta de los contextos forenses. Finalmente, se detectaron 12 escaneos (0{,}7\,\%) con etiquetas FDI duplicadas, cuyo tratamiento se abordará en la Sección~\ref{sec:preprocesado}. La distribución del número de dientes presentes se muestra en la Figura~\ref{fig:histograma-dientes}.
 
 \section{Preprocesado}
 \label{sec:preprocesado}
@@ -75,7 +75,7 @@ La Tabla~\ref{tab:metodo-s1} presenta el método S1, basado en PointNet++, que s
     \begin{tabular}{p{0.25\textwidth} >{\raggedright\arraybackslash}p{0.67\textwidth}}
          \hline 
          \textbf{Entrada} &
-         Nube de 16.000 puntos por escaneo, con coordenadas tridimensionales normalizadas. \\
+         Nube de hasta 16.000 puntos por escaneo, con coordenadas tridimensionales normalizadas. \\
 
          \textbf{Salida} &
          Para cada punto, probabilidades de pertenencia a las clases FDI o encía y un vector de desplazamiento hacia el centroide del diente correspondiente. \\
@@ -114,7 +114,7 @@ La Tabla~\ref{tab:metodo-n1} presenta el método N1, utilizado como línea base 
          Una etiqueta FDI por cada diente detectado. \\
 
          \textbf{Funcionamiento} &
-         Se calcula la media de las probabilidades de los puntos de cada diente y se selecciona la etiqueta FDI con mayor probabilidad. \\
+         A partir de la probabilidad FDI media de cada diente, obtenida en S1, se selecciona la etiqueta con mayor probabilidad. \\
 
          \textbf{Ventajas} &
          Implementación sencilla, bajo coste computacional y sin necesidad de información del resto de la arcada. \\
