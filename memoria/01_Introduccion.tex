@@ -190,7 +190,9 @@ Asimismo, se establece una reserva de 20 horas para afrontar posibles imprevisto
 
 La estimación económica del proyecto contempla tres conceptos principales: el coste de personal, el equipamiento informático y el software utilizado. No se incluyen los costes indirectos, como el consumo eléctrico o la conexión a Internet. El desglose de los costes considerados se presenta en la Tabla~\ref{tab:costes}.
 
-% PENDIENTE: Redactar el coste de personal cuando se confirme con los tutores el salario bruto anual de referencia, su fuente bibliográfica y la inclusión o no de las cotizaciones empresariales de la Seguridad Social.
+Para el coste de personal del alumno, se toma como referencia un salario bruto anual de 25.166{,}67 \euro{} para un perfil júnior de desarrollo de software en España, obtenido como media de tres fuentes salariales: Indeed, Glassdoor y Kulturo\footnote{Fuentes salariales consultadas el 17 de noviembre de 2026: \url{https://es.indeed.com/career/desarrollador-junior/salaries}, \url{https://www.glassdoor.es/Sueldos/ingeniero-de-software-junior-sueldo-SRCH_IN219_KO0,28.htm} y \url{https://www.kulturo.tech/blog/cuanto-cobra-un-ingeniero-informatico-en-espana}.}. Para calcular el coste para la empresa, se aplica un incremento estimado del 32\,\% correspondiente a las cotizaciones empresariales a la Seguridad Social\footnote{Tipos de cotización de 2026: \url{https://www.seg-social.es/wps/portal/wss/internet/Trabajadores/CotizacionRecaudacionTrabajadores/10721/10957/9932/4315/4316}.} y se considera una jornada anual de 1.800 horas, establecida en el XIX Convenio colectivo estatal de empresas de consultoría y tecnologías de la información\footnote{Artículo 20 del XIX Convenio colectivo estatal de empresas de consultoría y tecnologías de la información: \url{https://www.boe.es/buscar/doc.php?id=BOE-A-2025-7766}.}. De este modo, se obtiene un coste horario de 18{,}46 \euro{}/h, equivalente a 5.538{,}00 \euro{} para las 300 horas previstas.
+
+Asimismo, se estiman 35 horas de dedicación para cada uno de los supervisores, considerando las reuniones quincenales de seguimiento, de algo más de una hora, y la revisión de las entregas. Como referencia salarial, se utilizan las retribuciones de un profesor titular de universidad para el tutor y de un profesor ayudante doctor para el mentor, según las tablas retributivas del personal docente e investigador de la Universidad de Granada correspondientes a 2026, sin incluir complementos personales por antigüedad o actividad investigadora\footnote{Universidad de Granada, tablas de retribuciones del PDI en 2026: \url{https://gerencia.ugr.es/habilitacion/pages/retribuciones/tablas-de-retribuciones-2026}.}. Por homogeneidad, se aplican a ambos supervisores el mismo porcentaje estimado de cotización empresarial y la misma jornada anual de referencia, aunque estas hipótesis no reproducen necesariamente sus condiciones laborales reales.
 
 El coste del equipamiento se calcula a partir de una torre adquirida en septiembre de 2023 por 1.900 \euro{}, equipada con un procesador AMD Ryzen 7 5800X, 32 GB de RAM y una tarjeta gráfica NVIDIA RTX 4070 de 12 GB. Dado que se considera una vida útil de cuatro años, se aplica una amortización lineal durante 48 meses. En consecuencia, se imputa al proyecto la proporción correspondiente a sus 11 meses de duración, equivalente a 11/48 del precio de adquisición, lo que supone 435{,}42 \euro{}. El portátil, utilizado de forma puntual, no se incluye en esta estimación.
 
@@ -204,12 +206,14 @@ El coste total estimado del proyecto se obtiene sumando los conceptos anteriores
         \hline
         \textbf{Concepto} & \textbf{Cálculo} & \textbf{Coste (\euro{})} \\
         \hline 
-        Personal & 300 h $\times$ XX{,}XX \euro{}/h & X.XXX{,}XX \\
+        Personal (alumno) & 300 h $\times$ 18{,}46 \euro{}/h & 5.538{,}00 \\
+        Supervisión (tutor) & 35 h $\times$ 29{,}55 \euro{}/h & 1.034{,}25 \\
+        Supervisión (mentor) & 35 h $\times$ 26{,}60 \euro{}/h & 931{,}00 \\
         Equipo (torre) & 1.900 \euro{} $\times$ 11/48 & 435{,}42 \\
         Claude Pro & 18 \euro{}/mes $\times$ 11 meses & 198{,}00 \\
         Software libre y licencias UGR & --- & 0{,}00 \\
         \hline
-        \textbf{Total} & & \textbf{X.XXX{,}XX} \\
+        \textbf{Total} & & \textbf{8.136{,}67} \\
         \hline
     \end{tabular}
     \caption{Estimación del coste del proyecto.}
