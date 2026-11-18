@@ -1,7 +1,14 @@
 \chapter{Introducción}
 \label{cap:introduccion}
 
-Los escáneres intraorales 3D son dispositivos que permiten capturar la geometría y el color de la arcada dental de un paciente, generando una malla tridimensional detallada. Estos escáneres se utilizan para planificar tratamientos de ortodoncia, prótesis y otras intervenciones en odontología. Su uso se ha vuelto común, y cada vez más clínicas dentales realizan escaneos intraorales 3D (IOS 3D, del inglés \textit{intraoral scan}) de sus pacientes \cite{leeClinicalApplicationIntraoral2024}.
+Los escáneres intraorales 3D son dispositivos que permiten capturar la geometría y el color de la arcada dental de un paciente, generando una malla tridimensional detallada. Estos escáneres se utilizan para planificar tratamientos de ortodoncia, prótesis y otras intervenciones en odontología. Su uso se ha vuelto común, y cada vez más clínicas dentales realizan escaneos intraorales 3D (IOS 3D, del inglés \textit{intraoral scan}) de sus pacientes \cite{leeClinicalApplicationIntraoral2024}. La Figura~\ref{fig:ios} muestra un ejemplo de IOS 3D y el problema de numeración dental que aborda este trabajo.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{imagenes/figura_ios.png}
+    \caption[Ejemplo de IOS 3D con numeración FDI]{Ejemplo de IOS 3D de una arcada inferior con ausencia del diente 35, en vista oclusal. (a) Malla tridimensional del escaneo. (b) Numeración FDI de referencia, con los dientes coloreados según su tipo y la posición vacante del 35 indicada entre paréntesis. (c) En cambio, al numerar los dientes consecutivamente sin respetar la posición ausente, las etiquetas de los dientes situados detrás del hueco se desplazan una posición. Los números incorrectos se muestran en rojo. La numeración del panel (c) es una simulación ilustrativa y no corresponde a la predicción de ningún modelo. Escaneo procedente de Teeth3DS+ \cite{ben-hamadouTeeth3DSExtendedBenchmark2026}, con licencia CC BY-NC-ND 4.0.}
+    \label{fig:ios}
+\end{figure}
 
 Además de su aplicación en el ámbito clínico, estos escaneos tienen un gran potencial en la identificación forense, ya que permiten comparar registros \textit{antemortem} y \textit{postmortem}, lo cual puede ser fundamental para establecer la identidad de personas fallecidas. Cuando existen buenos registros previos, la odontología forense resulta clave en la identificación de víctimas, ya que llega a identificar en torno al 60\,\% de ellas, y contribuye en otro 30\,\% de los casos \cite{forrestForensicOdontologyDVI2019}. La literatura forense apunta a que se podrán comparar modelos 3D de manera automatizada \cite{forrestForensicOdontologyDVI2019}. Esto ayudaría en grandes catástrofes o accidentes donde se requiera identificar a muchas personas. Por eso, este trabajo se enfoca en segmentar y etiquetar cada diente en presencia de ausencias, apiñamiento y \textit{brackets}. Su finalidad es mantener la coherencia de la numeración sin asumir que la arcada está completa, con vistas a su uso en contextos forenses y clínicos.
 
